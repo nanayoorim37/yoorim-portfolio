@@ -1,1148 +1,132 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>장유림 — 음향 시스템 엔지니어</title>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
-  <link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-    :root {
-      --bg: #0a0a0a;
-      --bg-card: #111111;
-      --bg-elevated: #181818;
-      --border: #1c1c1c;
-      --border-light: #262626;
-      --text: #edeae3;
-      --text-sec: #888480;
-      --text-muted: #464340;
-      --accent: #b89a6a;
-      --accent-dim: rgba(184, 154, 106, 0.12);
-      --accent-border: rgba(184, 154, 106, 0.28);
-      --radius: 4px;
-      --ease: 0.2s ease;
-    }
-
-    html { scroll-behavior: smooth; }
-
-    body {
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      font-size: 15px;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 52px;
-      height: 60px;
-      background: rgba(10,10,10,0.88);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .nav-logo {
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      color: var(--text);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
-    .nav-links a {
-      color: var(--text-muted);
-      text-decoration: none;
-      font-size: 12px;
-      letter-spacing: 0.1em;
-      font-weight: 500;
-      text-transform: uppercase;
-      transition: color var(--ease);
-    }
-
-    .nav-links a:hover,
-    .nav-links a.active { color: var(--text); }
-
-    /* ── HERO ── */
-    #hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      padding: 120px 52px 80px;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .hero-label {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 28px;
-    }
-
-    .hero-name {
-      font-size: clamp(52px, 9vw, 88px);
-      font-weight: 700;
-      line-height: 1.0;
-      letter-spacing: -0.025em;
-      margin-bottom: 16px;
-    }
-
-    .hero-org {
-      font-size: 16px;
-      font-weight: 400;
-      color: var(--text-muted);
-      letter-spacing: 0.02em;
-      margin-bottom: 44px;
-    }
-
-    .hero-tagline {
-      font-size: 16px;
-      color: var(--text-sec);
-      line-height: 1.85;
-      max-width: 540px;
-      padding-left: 18px;
-      border-left: 1.5px solid var(--accent);
-    }
-
-    /* ── DIVIDER ── */
-    .divider {
-      width: calc(100% - 104px);
-      max-width: 1016px;
-      height: 1px;
-      background: var(--border);
-      margin: 0 auto;
-    }
-
-    /* ── SECTION ── */
-    .section-wrap {
-      padding: 100px 52px;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .section-header {
-      margin-bottom: 60px;
-    }
-
-    .section-eyebrow {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 12px;
-    }
-
-    .section-title {
-      font-size: 28px;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-    }
-
-    /* ── ABOUT ── */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: start;
-    }
-
-    .about-bio p {
-      font-size: 15px;
-      color: var(--text-sec);
-      line-height: 1.95;
-      margin-bottom: 20px;
-    }
-
-    .about-bio p:last-of-type { margin-bottom: 0; }
-
-    .cert-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--accent-dim);
-      border: 1px solid var(--accent-border);
-      color: var(--accent);
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 6px 14px;
-      border-radius: 2px;
-      margin-top: 28px;
-    }
-
-    .skills-col { }
-
-    .skills-group {
-      margin-bottom: 32px;
-    }
-
-    .skills-group:last-child { margin-bottom: 0; }
-
-    .skills-group-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .skill-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .skill-tag {
-      font-size: 12px;
-      font-weight: 500;
-      color: var(--text-sec);
-      background: var(--bg-card);
-      border: 1px solid var(--border-light);
-      padding: 4px 11px;
-      border-radius: 2px;
-    }
-
-    /* ── PROJECTS ── */
-    .project-filters {
-      display: flex;
-      gap: 0;
-      margin-bottom: 40px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .filter-btn {
-      background: none;
-      border: none;
-      border-bottom: 2px solid transparent;
-      margin-bottom: -1px;
-      color: var(--text-muted);
-      font-family: inherit;
-      font-size: 12px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 10px 20px;
-      cursor: pointer;
-      transition: color var(--ease), border-color var(--ease);
-    }
-
-    .filter-btn:hover { color: var(--text-sec); }
-
-    .filter-btn.active {
-      color: var(--text);
-      border-bottom-color: var(--accent);
-    }
-
-    /* project list */
-    .projects-list {
-      border: 1px solid var(--border);
-    }
-
-    .project-card {
-      border-bottom: 1px solid var(--border);
-      transition: background var(--ease);
-    }
-
-    .project-card:last-child { border-bottom: none; }
-
-    .project-card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 24px;
-      padding: 30px 32px;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .project-card:hover .project-card-header { background: var(--bg-card); }
-    .project-card.expanded .project-card-header { background: var(--bg-card); }
-
-    .project-meta { flex: 1; }
-
-    .project-category {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 8px;
-    }
-
-    .project-title {
-      font-size: 17px;
-      font-weight: 600;
-      line-height: 1.4;
-      margin-bottom: 5px;
-    }
-
-    .project-subtitle {
-      font-size: 13px;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-    }
-
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-    }
-
-    .project-tag {
-      font-size: 11px;
-      font-weight: 500;
-      color: var(--text-muted);
-      background: var(--bg-elevated);
-      padding: 3px 9px;
-      border-radius: 2px;
-    }
-
-    .expand-icon {
-      width: 20px;
-      height: 20px;
-      flex-shrink: 0;
-      color: var(--text-muted);
-      transition: transform 0.3s ease;
-      margin-top: 4px;
-    }
-
-    .project-card.expanded .expand-icon {
-      transform: rotate(45deg);
-      color: var(--accent);
-    }
-
-    /* project detail */
-    .project-detail {
-      display: none;
-      padding: 0 32px 32px;
-      background: var(--bg-card);
-      border-top: 1px solid var(--border);
-      animation: fadeSlide 0.22s ease;
-    }
-
-    .project-card.expanded .project-detail { display: block; }
-
-    @keyframes fadeSlide {
-      from { opacity: 0; transform: translateY(-6px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .detail-inner {
-      padding-top: 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-    }
-
-    .detail-block { }
-
-    .detail-label {
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 14px;
-    }
-
-    /* spec table */
-    .spec-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-    }
-
-    .spec-table tr { border-bottom: 1px solid var(--border); }
-    .spec-table tr:last-child { border-bottom: none; }
-
-    .spec-table td {
-      padding: 9px 0;
-      color: var(--text-sec);
-      vertical-align: top;
-    }
-
-    .spec-table td:first-child {
-      color: var(--text-muted);
-      width: 140px;
-      font-size: 12px;
-      font-weight: 500;
-      padding-right: 16px;
-    }
-
-    /* task list */
-    .task-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .task-list li {
-      font-size: 14px;
-      color: var(--text-sec);
-      line-height: 1.75;
-      padding-left: 16px;
-      position: relative;
-    }
-
-    .task-list li::before {
-      content: '—';
-      position: absolute;
-      left: 0;
-      color: var(--text-muted);
-      font-size: 12px;
-    }
-
-    /* troubleshoot */
-    .ts-list {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-
-    .ts-item {
-      background: var(--bg-elevated);
-      border-left: 2px solid var(--accent);
-      padding: 18px 22px;
-    }
-
-    .ts-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
-
-    .ts-body {
-      font-size: 13px;
-      color: var(--text-sec);
-      line-height: 1.85;
-    }
-
-    /* delay table */
-    .data-table {
-      width: 100%;
-      border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 16px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .data-table th {
-      text-align: left;
-      padding: 7px 14px;
-      font-size: 10px;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border-light);
-    }
-
-    .data-table td {
-      padding: 9px 14px;
-      color: var(--text-sec);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .data-table tr:last-child td { border-bottom: none; }
-
-    /* lessons */
-    .lesson-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .lesson-list li {
-      font-size: 14px;
-      color: var(--text-sec);
-      line-height: 1.85;
-      padding: 10px 0 10px 18px;
-      border-bottom: 1px solid var(--border);
-      position: relative;
-    }
-
-    .lesson-list li:last-child { border-bottom: none; }
-
-    .lesson-list li::before {
-      content: '·';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-size: 18px;
-      line-height: 1.65;
-      font-weight: 700;
-    }
-
-    /* other list */
-    .other-list {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      column-gap: 40px;
-    }
-
-    .other-item {
-      padding: 11px 0;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-
-    .other-item-name {
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--text);
-    }
-
-    .other-item-detail {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ── FOOTER ── */
-    footer {
-      border-top: 1px solid var(--border);
-      padding: 36px 52px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      max-width: 1120px;
-      margin: 0 auto;
-    }
-
-    .footer-name {
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.06em;
-    }
-
-    .footer-org {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      nav { padding: 0 28px; }
-      #hero { padding: 100px 28px 72px; }
-      .section-wrap { padding: 80px 28px; }
-      .divider { width: calc(100% - 56px); }
-
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 52px;
-      }
-
-      .other-list { grid-template-columns: 1fr; }
-
-      footer {
-        padding: 28px;
-        flex-direction: column;
-        gap: 6px;
-        text-align: center;
-      }
-    }
-
-    @media (max-width: 560px) {
-      .hero-name { font-size: 42px; }
-      .nav-links { display: none; }
-      .project-card-header { padding: 22px 20px; }
-      .project-detail { padding: 0 20px 24px; }
-      .spec-table td:first-child { width: 110px; }
-    }
-  </style>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>장유림 — 음향 시스템 엔지니어</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Pretendard',sans-serif;background:#f2f4f7;color:#1e2433;line-height:1.7;font-size:15px;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 60px;height:56px;background:rgba(242,244,247,.92);backdrop-filter:blur(12px);border-bottom:1px solid #dde2ec}
+.nav-logo{font-size:14px;font-weight:700;letter-spacing:.06em;text-decoration:none;color:#1e2433}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{color:#8a96aa;text-decoration:none;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:#2563eb}
+#hero{min-height:100vh;display:flex;align-items:center;padding:100px 60px 80px;max-width:1140px;margin:0 auto}
+.hero-wrap{display:grid;grid-template-columns:1fr auto;gap:60px;align-items:center;width:100%}
+.hl{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2563eb;margin-bottom:18px}
+.hn{font-size:clamp(52px,8vw,84px);font-weight:700;letter-spacing:-.03em;line-height:1.0;margin-bottom:16px}
+.horg{font-size:14px;color:#8a96aa;margin-bottom:24px}
+.htag{font-size:15px;color:#4e5a70;line-height:1.85;padding-left:16px;border-left:2px solid #2563eb;max-width:460px}
+.hero-card{background:#fff;border:1px solid #dde2ec;padding:32px 28px;min-width:220px;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.hc-label{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:#8a96aa;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #eef0f5}
+.hc-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid #f2f4f7;font-size:13px;color:#4e5a70}
+.hc-item:last-child{border-bottom:none}
+.hc-dot{width:6px;height:6px;border-radius:50%;background:#2563eb;flex-shrink:0}
+.div{width:calc(100% - 120px);max-width:1020px;height:1px;background:#dde2ec;margin:0 auto}
+.wrap{padding:92px 60px;max-width:1140px;margin:0 auto}
+.eye{font-size:11px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#2563eb;margin-bottom:10px}
+.st2{font-size:27px;font-weight:700;letter-spacing:-.01em;margin-bottom:52px;color:#1e2433}
+.ag{display:grid;grid-template-columns:1fr 1fr;gap:80px}
+.ab p{font-size:15px;color:#4e5a70;line-height:1.9;margin-bottom:18px}
+.cert{display:inline-flex;align-items:center;gap:8px;background:#eff4ff;border:1px solid #bdd0ff;color:#2563eb;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:6px 14px;margin-top:22px}
+.sgl{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8a96aa;margin-bottom:10px}
+.sg{margin-bottom:28px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:12px;color:#4e5a70;background:#fff;border:1px solid #dde2ec;padding:4px 11px}
+.filters{display:flex;gap:0;margin-bottom:36px;border-bottom:1px solid #dde2ec}
+.fb{background:none;border:none;border-bottom:2px solid transparent;margin-bottom:-1px;color:#8a96aa;font-family:inherit;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:10px 18px;cursor:pointer;transition:color .2s}
+.fb:hover{color:#4e5a70}.fb.active{color:#1e2433;border-bottom-color:#2563eb}
+.plist{background:#fff;border:1px solid #dde2ec;box-shadow:0 1px 8px rgba(0,0,0,.04)}
+.pc{border-bottom:1px solid #eef0f5}
+.pc:last-child{border-bottom:none}
+.pch{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;padding:24px 28px;cursor:pointer;transition:background .2s}
+.pch:hover,.pc.expanded .pch{background:#f8f9fb}
+.pm{flex:1}
+.pcat{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#2563eb;margin-bottom:6px}
+.ptitle{font-size:17px;font-weight:600;color:#1e2433;margin-bottom:4px}
+.psub{font-size:12px;color:#8a96aa;margin-bottom:10px}
+.ptags{display:flex;flex-wrap:wrap;gap:5px}
+.ptag{font-size:11px;color:#8a96aa;background:#f2f4f7;padding:2px 9px;border:1px solid #e4e8f0}
+.xi{width:18px;height:18px;color:#8a96aa;flex-shrink:0;margin-top:2px;transition:transform .3s,color .2s}
+.pc.expanded .xi{transform:rotate(45deg);color:#2563eb}
+.pd{display:none;padding:0 28px 24px;background:#f8f9fb;border-top:1px solid #eef0f5;animation:fi .2s ease}
+.pc.expanded .pd{display:block}
+@keyframes fi{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+.di{padding-top:22px;display:flex;flex-direction:column;gap:26px}
+.dl{font-size:10px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:#8a96aa;margin-bottom:12px}
+.role-text{font-size:14px;color:#4e5a70}
+.st{width:100%;border-collapse:collapse;font-size:13px}
+.st tr{border-bottom:1px solid #eef0f5}.st tr:last-child{border-bottom:none}
+.st td{padding:8px 0;color:#4e5a70;vertical-align:top}.sk{color:#8a96aa!important;width:130px;padding-right:16px}
+.tl{list-style:none;display:flex;flex-direction:column;gap:8px}
+.tl li{font-size:14px;color:#4e5a70;line-height:1.75;padding-left:16px;position:relative}
+.tl li::before{content:'—';position:absolute;left:0;color:#8a96aa;font-size:12px}
+.tsl{display:flex;flex-direction:column;gap:8px}
+.tsi{background:#fff;border-left:2px solid #2563eb;padding:16px 20px;border:1px solid #dde2ec;border-left:2px solid #2563eb}
+.tst{font-size:13px;font-weight:600;color:#1e2433;margin-bottom:8px}
+.tsb{font-size:13px;color:#4e5a70;line-height:1.85}
+.dt{width:100%;border-collapse:collapse;font-size:13px;margin-top:14px}
+.dt th{text-align:left;padding:6px 12px;font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#8a96aa;border-bottom:1px solid #dde2ec}
+.dt td{padding:8px 12px;color:#4e5a70;border-bottom:1px solid #eef0f5}
+.dt tr:last-child td{border-bottom:none}
+.ll{list-style:none}
+.ll li{font-size:14px;color:#4e5a70;line-height:1.85;padding:8px 0 8px 16px;border-bottom:1px solid #eef0f5;position:relative}
+.ll li:last-child{border-bottom:none}
+.ll li::before{content:'•';position:absolute;left:0;font-weight:700;color:#2563eb}
+.ol{display:grid;grid-template-columns:1fr 1fr;column-gap:40px}
+.oi{padding:10px 0;border-bottom:1px solid #eef0f5;display:flex;flex-direction:column;gap:2px}
+.on{font-size:14px;font-weight:500;color:#1e2433}
+.od{font-size:12px;color:#8a96aa}
+footer{border-top:1px solid #dde2ec;padding:32px 60px;display:flex;justify-content:space-between;align-items:center;max-width:1140px;margin:0 auto}
+.fn{font-size:13px;font-weight:700;color:#1e2433}.fo{font-size:12px;color:#8a96aa}
+@media(max-width:900px){.hero-wrap{grid-template-columns:1fr}.hero-card{display:none}}
+@media(max-width:768px){nav,footer{padding:0 24px}.wrap{padding:72px 24px}#hero{padding:100px 24px 64px}.ag{grid-template-columns:1fr;gap:40px}.ol{grid-template-columns:1fr}footer{padding:28px 24px;flex-direction:column;gap:6px;text-align:center}.div{width:calc(100% - 48px)}}
+</style>
 </head>
 <body>
-
-  <!-- ── NAV ── -->
-  <nav>
-    <a href="#hero" class="nav-logo">장유림</a>
-    <ul class="nav-links">
-      <li><a href="#about" id="nav-about">About</a></li>
-      <li><a href="#projects" id="nav-projects">Projects</a></li>
-    </ul>
-  </nav>
-
-  <!-- ── HERO ── -->
-  <div id="hero">
+<nav><a href="#hero" class="nav-logo">장유림</a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li></ul></nav>
+<div id="hero"><div class="hero-wrap">
+  <div>
+    <p class="hl">Sound System Engineer</p>
+    <h1 class="hn">장유림</h1>
+    <p class="horg">(주)아트믹스 시스템·설치팀</p>
+    <p class="htag">측정과 청음으로 공간의 사운드를 맞추는 일을 합니다.</p>
+  </div>
+  <div class="hero-card">
+    <p class="hc-label">Core Stack</p>
+    <div class="hc-item"><div class="hc-dot"></div>d&b GSL · J · V · Vi</div>
+    <div class="hc-item"><div class="hc-dot"></div>Lake Controller · d&b R1</div>
+    <div class="hc-item"><div class="hc-dot"></div>Smaart v8 · v9</div>
+    <div class="hc-item"><div class="hc-dot"></div>SPAT Revolution</div>
+    <div class="hc-item"><div class="hc-dot"></div>Dante Network</div>
+    <div class="hc-item"><div class="hc-dot"></div>AutoCAD</div>
+  </div>
+</div></div>
+<div class="div"></div>
+<div class="wrap" id="about">
+  <p class="eye">01 — About</p><h2 class="st2">소개</h2>
+  <div class="ag">
+    <div class="ab">
+      <p>대형 공연장에서 d&b GSL·J, JBL A12 등 large format array system을 다뤄왔고, Delay Speakers·Front Fill 등 일부 존은 직접 튜닝해본 경험이 있습니다. 교회 음향 시스템은 진단부터 설계·설치·튜닝까지 풀사이클로 다뤘습니다.</p>
+      <p>측정이 방향을 잡아주지만 최종 판단은 귀로 한다고 생각합니다. 같은 이유로 듣는 자리에 따라 달라지는 정위와 공간 음향에 관심을 갖게 됐고, 이머시브 환경에서 이를 다뤄본 경험이 있습니다.</p>
+      <div class="cert">정보통신기사</div>
+    </div>
     <div>
-      <p class="hero-label">Sound System Engineer</p>
-      <h1 class="hero-name">장유림</h1>
-      <p class="hero-org">(주)아트믹스 시스템·설치팀</p>
-      <p class="hero-tagline">
-        측정과 청음으로 공간의 사운드를 맞추는 일을 합니다.
-      </p>
+      <div class="sg"><p class="sgl">PA 시스템</p><div class="tags"><span class="tag">d&b GSL</span><span class="tag">d&b J Series</span><span class="tag">d&b V Series</span><span class="tag">d&b Vi Series</span><span class="tag">JBL A8·A12</span></div></div>
+      <div class="sg"><p class="sgl">DSP &amp; Analyzer</p><div class="tags"><span class="tag">Lake Controller</span><span class="tag">d&b R1</span><span class="tag">Smaart v8·v9</span><span class="tag">SPAT Revolution</span><span class="tag">Dolby Atmos</span></div></div>
+      <div class="sg"><p class="sgl">콘솔 &amp; 네트워크</p><div class="tags"><span class="tag">YAMAHA PM10</span><span class="tag">Digico</span><span class="tag">Dante</span><span class="tag">Pro Tools</span></div></div>
+      <div class="sg"><p class="sgl">설계 &amp; 문서</p><div class="tags"><span class="tag">시스템 설계</span><span class="tag">블록도 작성</span><span class="tag">AutoCAD</span><span class="tag">제안서 작성</span></div></div>
     </div>
   </div>
-
-  <div class="divider"></div>
-
-  <!-- ── ABOUT ── -->
-  <div class="section-wrap" id="about">
-    <div class="section-header">
-      <p class="section-eyebrow">01 — About</p>
-      <h2 class="section-title">소개</h2>
-    </div>
-    <div class="about-grid">
-      <div class="about-bio">
-        <p>대형 공연장에서 d&b GSL·J, JBL A12 등 large format array system을 다뤄왔고, Delay Speakers·Front Fill 등 일부 존은 직접 튜닝해본 경험이 있습니다. 교회 음향 시스템은 진단부터 설계·설치·튜닝까지 풀사이클로 다뤘습니다.</p>
-        <p>측정이 방향을 잡아주지만 최종 판단은 귀로 한다고 생각합니다. 같은 이유로 듣는 자리에 따라 달라지는 정위와 공간 음향에 관심을 갖게 됐고, 이머시브 환경에서 이를 다뤄본 경험이 있습니다.</p>
-        <div class="cert-badge">정보통신기사</div>
-      </div>
-      <div class="skills-col">
-        <div class="skills-group">
-          <p class="skills-group-label">PA 시스템</p>
-          <div class="skill-tags">
-            <span class="skill-tag">d&b GSL</span>
-            <span class="skill-tag">d&b J Series</span>
-            <span class="skill-tag">d&b V Series</span>
-            <span class="skill-tag">d&b Vi Series</span>
-            <span class="skill-tag">JBL A8 · A12</span>
-            <span class="skill-tag">JBL VRX</span>
-          </div>
-        </div>
-        <div class="skills-group">
-          <p class="skills-group-label">DSP &amp; Analyzer</p>
-          <div class="skill-tags">
-            <span class="skill-tag">Lake Controller</span>
-            <span class="skill-tag">d&b R1</span>
-            <span class="skill-tag">Smaart v8 · v9</span>
-            <span class="skill-tag">SPAT Revolution</span>
-            <span class="skill-tag">Dolby Atmos</span>
-          </div>
-        </div>
-        <div class="skills-group">
-          <p class="skills-group-label">콘솔 &amp; 네트워크</p>
-          <div class="skill-tags">
-            <span class="skill-tag">YAMAHA PM10</span>
-            <span class="skill-tag">Digico</span>
-            <span class="skill-tag">Dante</span>
-            <span class="skill-tag">Pro Tools</span>
-          </div>
-        </div>
-        <div class="skills-group">
-          <p class="skills-group-label">설계 &amp; 문서</p>
-          <div class="skill-tags">
-            <span class="skill-tag">시스템 설계</span>
-            <span class="skill-tag">블록도 작성</span>
-            <span class="skill-tag">AutoCAD</span>
-            <span class="skill-tag">제안서 작성</span>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
-  <!-- ── PROJECTS ── -->
-  <div class="section-wrap" id="projects">
-    <div class="section-header">
-      <p class="section-eyebrow">02 — Projects</p>
-      <h2 class="section-title">작업 경험</h2>
-    </div>
-
-    <div class="project-filters">
-      <button class="filter-btn active" data-filter="all">전체</button>
-      <button class="filter-btn" data-filter="tuning">라이브 튜닝</button>
-      <button class="filter-btn" data-filter="installation">설치</button>
-      <button class="filter-btn" data-filter="immersive">이머시브</button>
-    </div>
-
-    <div class="projects-list" id="projectsList"></div>
-  </div>
-
-  <!-- ── FOOTER ── -->
-  <footer>
-    <span class="footer-name">장유림</span>
-    <span class="footer-org">음향 시스템 엔지니어 &nbsp;·&nbsp; (주)아트믹스</span>
-  </footer>
-
-  <script>
-    const projects = [
-      {
-        id: 'bhs',
-        category: 'tuning',
-        categoryLabel: '라이브 튜닝',
-        title: '박효신 단독 콘서트',
-        subtitle: '문학경기장 · 2026.03–04',
-        role: '튜닝 보조 + J-Stack 직접 튜닝 + Lake 오퍼레이팅',
-        tags: ['d&b GSL', 'Lake Controller LM44', 'Smaart v9', 'RME UFX3'],
-        system: [
-          ['Main L/R', 'd&b GSL8 14ea + GSL12 2ea each'],
-          ['Sub', 'F-SUB, G-SUB'],
-          ['Fill', 'LL/RR · Front Fill · 270° · J-Stack'],
-          ['Delay', 'Delay 1 · Delay 2'],
-          ['DSP', 'Lake Controller LM44, d&b R1'],
-          ['Analyzer', 'Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7'],
-        ],
-        tasks: [
-          '멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB',
-          '어레이 균일도 조정: 스피커 어레이 Top·Middle·Bottom 존 간 레벨·주파수 편차 최소화',
-          '공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생. 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워 커버리지까지 일관된 사운드 도출',
-          '실시간 피드백 반영: 리허설 및 공연 중 모니터링, 즉각 조정',
-        ],
-        troubleshootings: [
-          {
-            title: 'Delay 타워 딜레이 값 절충',
-            body: '측정 위치에 따라 Main과 Delay 타워 간 거리비가 달라지는 문제로 절충안을 찾는 데 시간이 오래 소요됐다. 1층 FOH 기준으로 맞춘 딜레이 값은 4층에서 들었을 때 얼라인먼트가 어긋나고, 반대로 4층 기준으로 맞추면 1층에서 문제가 생겼다. 스타디움 특성상 수직 거리 차이가 크기 때문에 단일 측정 포인트로 전 구역을 커버할 수 없는 구조적 문제였다.<br><br>대응: 1층과 4층 각각에서 측정 후 절충점을 찾아 설정. 수치 결정 후 직접 걸어다니며 청음으로 최종 확인. 다만 최종 절충안에서도 1층에서는 딜레이 차이가 귀로 느껴지는 수준으로 남았다.',
-            delayTable: [
-              ['3/30', '183.45ms', '326.00ms'],
-              ['3/31', '173.20ms', '281.02ms'],
-              ['4/2',  '197.57ms', '318.25ms'],
-              ['4/3',  '156.00ms', '259.20ms'],
-            ],
-          },
-        ],
-        lessons: [
-          'EQ 조정 시 목적을 명확히 하고 건드려야 한다. 피드백 대응 시 전체 그룹에서 조절했다가 딜레이 존 하이가 과도하게 깎이는 상황이 발생했다. 다음에는 문제가 발생한 존만 조절할 것.',
-          '물리적 한계는 EQ로 해결되지 않는다. Delay 2 맨 뒤 객석에 하이가 닿지 않는 문제를 레벨과 EQ로 해결하려 했으나 효과가 없었고, 결국 스피커 높이와 각도를 물리적으로 조정해 해결했다.',
-          '멈출 때를 알아야 한다. 공연 중 과도한 조작은 오히려 독이 된다.',
-        ],
-      },
-      {
-        id: 'illit',
-        category: 'tuning',
-        categoryLabel: '라이브 튜닝',
-        title: '아일릿 단독 콘서트',
-        subtitle: '올림픽홀 · 2025.11',
-        role: '튜닝 보조',
-        tags: ['d&b J·V 시스템', 'd&b R1', 'Smaart v8', 'MOTU M4'],
-        system: [
-          ['Main L/R', 'd&b J8 12ea + J12 2ea each'],
-          ['Out Fill', 'd&b V8 6ea (Stacked)'],
-          ['Front Fill', 'd&b V8 1ea each'],
-          ['SUB', '3 Points Stacked each'],
-          ['Side Fill', 'Q 2ea'],
-          ['DSP', 'd&b R1'],
-          ['Analyzer', 'Smaart v8 + MOTU M4 + dbx RTA-M'],
-        ],
-        tasks: [
-          '멀티존 Time Alignment: Main / Sub / Front Fill / Out Fill',
-          'L·R 센터 정렬: L·R 리깅 위치 차이로 인한 콤필터링 제거, 정위감 센터 기준으로 보정',
-          '공간 균일성 확보: 존별 EQ·레벨 조정으로 Main 커버리지부터 Out Fill·VIP 구역까지 일관된 사운드 도출. 구역별 순회 청음으로 최종 확인',
-          '실시간 피드백 반영: Pro Tools 사운드 체크 및 테크 리허설 중 위치별 순회 청음, 즉각 조정',
-        ],
-        troubleshootings: [
-          {
-            title: 'FF Time Alignment 위상 절충',
-            body: 'Main(d&b J)과 Front Fill(d&b V) 간 Time Alignment 과정에서 하이와 로우를 동시에 맞출 수 없는 상황이 발생했다. 하이 위상을 맞추면 로우 위상이 역전되고, 로우를 맞추면 하이가 캔슬되는 구조적 문제였다. J와 V의 방사 특성 차이에서 기인한 것으로, 단순 딜레이 값 조정만으로는 해결되지 않았다.<br><br>대응: FF에 로우컷을 적용해 위상 충돌 구간을 제거하고, 딜레이 값을 미세 조정해 하이 대역 기울기를 맞추는 방식으로 절충. 이후 Main과 동시 재생해 하이 캔슬 여부를 확인하고 FF EQ로 마무리.',
-          },
-          {
-            title: 'Out Fill 위상 캔슬',
-            body: 'Main과 Out Fill이 겹치는 2층 앞 구역에서 하이가 적게 들리는 문제가 발생했다. J와 V의 방사 특성 차이로 인해 해당 구간에서 원천적으로 위상 캔슬이 일어나는 구조였다. 측정으로 최대한 맞췄으나 완전한 해결은 불가능했고, 귀로 들었을 때 더 나은 방향으로 최종 조정했다.',
-          },
-        ],
-        lessons: [
-          '서로 다른 드라이버 구성의 스피커를 인접 존에 혼용할 경우 위상 절충이 불가피하다. 어느 대역을 우선할지 판단 기준을 미리 세우고 접근해야 한다.',
-          '측정은 방향을 잡아주지만 최종 판단은 귀로 한다. VIP 구역 서브 댐핑감 부족 문제는 Main-Sub 얼라인먼트를 0.1~0.5ms 단위로 조정하며 청감으로 확인했다.',
-          '같은 베뉴 이전 기록이 있었다면 시간을 크게 단축할 수 있었을 것이다. 현장 기록의 축적이 다음 현장의 자산이 된다.',
-        ],
-      },
-      {
-        id: 'plave',
-        category: 'tuning',
-        categoryLabel: '라이브 튜닝',
-        title: '플레이브 단독 콘서트',
-        subtitle: '고척스카이돔 · 2025.11',
-        role: '튜닝 보조 + FF 직접 튜닝 + Lake 오퍼레이팅',
-        tags: ['d&b GSL + JBL', 'Lake LM48', 'Smaart v8', 'OCTA CAPTURE'],
-        system: [
-          ['Main L/R', 'd&b GSL 24ea each'],
-          ['Out Fill LL/RR', 'd&b GSL'],
-          ['Delay', '6 Points, V8 16ea each'],
-          ['SUB', '8 Points, GSL-SUB 3ea each'],
-          ['DSP', 'Lake LM48, d&b R1'],
-          ['Analyzer', 'Smaart v8 + OCTA CAPTURE'],
-        ],
-        tasks: [
-          '멀티존 Time Alignment: Main / Out Fill / Delay / SUB / Front Fill',
-          '공간 균일성 확보: 돔 구조 특성상 딜레이 존이 6포인트로 분산. 존별 레벨·EQ 조정으로 전 구역 균일한 사운드 도출',
-          '4층 순회 청음: 측정 후 직접 4층 전 구역을 걸어다니며 귀로 최종 확인 및 조정',
-          'Front Fill 직접 튜닝: 마이크 측정 + 현장 청음으로 FF 딜레이·EQ 조정 직접 진행',
-        ],
-        troubleshootings: [
-          {
-            title: '리허설 중 FF Time Alignment',
-            body: '시간 부족으로 FF 튜닝 전체를 리허설 이후로 넘겨야 했고, 메인이 재생되는 상황에서 작업을 진행했다. 메인 신호가 흐르는 상태에서 FF 스피커를 하나씩 재생하며 Smaart 임펄스 응답으로 딜레이 값을 확인하고 맞췄다.',
-          },
-          {
-            title: 'FF 마이크 위치 오류',
-            body: 'Front Fill 튜닝 시 마이크를 FF 스피커들 사이에 배치했으나 얼라인먼트가 맞지 않았다. 원인은 FF 스피커들이 일직선상에 있지 않고 한 포인트가 유독 앞으로 나와있어 마이크가 Off-Axis 위치에 놓인 것이었다. 마이크를 뒤로 이동해 On-Axis가 되도록 조정한 후 재측정해 해결했다.',
-          },
-          {
-            title: 'Delay 포인트 위치에 따른 왜곡',
-            body: '6포인트 딜레이 설계 시 SPL은 고려했으나 객석과 각 포인트 간 거리 차이에 따라 달라지는 딜레이 값을 충분히 반영하지 못했다. 특정 위치에서 왜곡이 발생했고, EQ와 딜레이 값 조정을 시도했으나 물리적 배치에서 비롯된 오차였기 때문에 유의미한 개선이 되지 않았다.',
-          },
-        ],
-        lessons: [
-          '마이크 위치는 스피커 커버리지 기준으로 잡아야 한다. 공간 기하학적 중앙이 아닌, 인접 스피커의 Off-Axis 영향까지 고려한 위치 선정이 필요하다.',
-          '측정값과 청감을 반복적으로 대조해야 한다. 4층 순회 청음에서 딜레이 아웃 존 레벨이 과다하고 딜레이 인 존이 묻히는 것을 귀로 확인 후 조정했다.',
-          '딜레이 포인트 설계 단계에서 SPL뿐 아니라 객석 각 위치까지의 거리 편차를 함께 고려해야 한다. 물리적 배치가 확정된 이후에는 EQ나 딜레이 값으로 해결할 수 있는 범위가 제한된다.',
-        ],
-      },
-      {
-        id: 'other-tuning',
-        category: 'tuning',
-        categoryLabel: '라이브 튜닝',
-        title: '기타 라이브 튜닝 경험',
-        subtitle: '다수 현장 · 2023–2026',
-        tags: ['d&b GSL', 'JBL A8 · A12', '야외 스타디움', '실내 돔', '원형 베뉴'],
-        isOther: true,
-        otherItems: [
-          { name: 'GD', detail: '고양종합운동장 / d&b GSL + JBL A12 / 야외 스타디움' },
-          { name: 'GD', detail: '고척스카이돔 / d&b GSL + JBL A12 / 실내 돔' },
-          { name: '태민', detail: 'KSPO돔 / d&b A12 + JBL A12 / Flying SUB 카디오이드 패턴' },
-          { name: '스트레이키즈', detail: 'KSPO돔 (2025.02)' },
-          { name: '스트레이키즈', detail: 'KSPO돔 (2024.03)' },
-          { name: '아이브', detail: '인스파이어 360 / JBL A8 / 원형 베뉴 멀티어레이' },
-          { name: '트와이스', detail: '인스파이어 360 / JBL A8' },
-          { name: '스트레이키즈', detail: '인스파이어' },
-          { name: '태민', detail: '인스파이어' },
-          { name: '박효신', detail: '88잔디마당' },
-          { name: '포레스텔라', detail: '경희대 평화의전당' },
-          { name: '백예린', detail: '에스팩토리 / JBL A8·A12' },
-          { name: '킹누 내한', detail: '올림픽홀' },
-          { name: '헤드윅 뮤지컬', detail: '샤롯데씨어터' },
-          { name: '박서진', detail: '킨텍스 1홀 / d&b J + V' },
-        ],
-      },
-      {
-        id: 'chuncheon',
-        category: 'installation',
-        categoryLabel: '설치',
-        title: '춘천한마음교회 본당 음향 시스템 교체',
-        subtitle: '춘천 · 2024.07',
-        role: '설계 · 블록도 작성 · 설치 · 튜닝',
-        tags: ['d&b Vi 시리즈', '풀사이클 설치', '블록도 작성', '제안서'],
-        system: [
-          ['Main L/R', 'd&b Vi8 4ea + Vi12 2ea + Vi-SUB 1ea each'],
-          ['Front Fill', 'd&b Yi7P 2ea + Vi-GSUB 2ea each side'],
-          ['Under Balcony', 'd&b 8S 6ea'],
-          ['Stage Monitor', 'd&b MAX2 4ea + 5S 2ea + 8S 1ea'],
-          ['중고등부실', 'JBL VRX912 2ea + VRX918 2ea each side'],
-          ['DSP', 'd&b 40D × 4, 30D × 2, 10D × 1'],
-        ],
-        tasks: [
-          '기존 시스템 문제 진단: 메인 스피커 안쪽 배치로 인한 마이크-스피커 물리적 간섭 파악, 피드백 원인 규명',
-          '스피커 위치 재설계: 외측으로 이동해 마이크-스피커 간섭 물리적 해소',
-          '커버리지 보강 설계: 발코니 언더존 스피커 추가로 후방 데드존 해소',
-          '블록도 작성: 본당 Main L/R, Fills·MON, Under Balcony, 중고등부실, 유치부실 총 6개 작성',
-          '제안서 작성: 문제 진단·개선 방향·스피커 선정 근거 포함',
-        ],
-        troubleshootings: [
-          {
-            title: '설교 시 구석 커버리지 부족',
-            body: '클라이언트의 요구에 맞춰 고출력 메인 어레이와 넉넉한 서브를 중심으로 설계했고, 딜레이 포인트는 기존 수량을 유지했다. 그러나 실제 예배 중 목사님 말씀 시 구석 좌석까지 소리가 충분히 전달되지 않는다는 피드백이 들어왔다. 음악 재생 시와 달리 스피치는 음압보다 명료도와 커버리지 균일성이 중요한데, 이 부분을 설계 단계에서 충분히 고려하지 못했다.',
-          },
-        ],
-        lessons: [
-          '클라이언트의 요구 너머를 봐야 한다. "큰 음압"이라는 요구 하나만 반영했다가 실제 사용 상황인 스피치 커버리지를 놓쳤다. 요구사항을 들으면서도 전체 사용 맥락을 스스로 파악하고 역제안할 줄 알아야 한다.',
-          '콘솔마다 재생 특성이 다르다. 본당 Digico 콘솔에서는 전 대역이 고르게 나왔으나 소예배당 Behringer 콘솔에서는 2~4kHz 대역이 거칠게 재생됐다. 콘솔 특성을 파악하고 튜닝에 반영해야 한다.',
-          '튜닝 방향성은 기술적 기준을 지키면서도 클라이언트의 청취 성향에 맞춰야 한다. 사전에 클라이언트의 성향을 파악하고 그 방향 안에서 튜닝을 완성해야 한다.',
-        ],
-      },
-      {
-        id: 'cheongju',
-        category: 'installation',
-        categoryLabel: '설치',
-        title: '청주시온교회 교육관 음향 시스템 리모델링',
-        subtitle: '청주 · 2024.11',
-        role: '설계 · 제안 · 설치 · 튜닝 전체',
-        tags: ['JAY AUDIO (Artmix)', 'AutoCAD', '격자 배치 설계', '제안서'],
-        system: [
-          ['교육관 3층', 'JAY AUDIO S8 8ea + S2.5 8ea / 격자 배치'],
-          ['교육관 2층', 'JAY AUDIO S2.5 16ea / 격자 배치'],
-          ['1층 1-1', 'JAY AUDIO S2.5 6ea'],
-          ['1층 1-2', 'JAY AUDIO S2.5 4ea'],
-          ['1층 1-3', 'JAY AUDIO S2.5 2ea'],
-        ],
-        tasks: [
-          '기존 시스템 진단: 2·3층 메인 스피커로 저음 대역까지 출력하던 구조가 유닛 고장의 원인으로 판단. 3층은 서브우퍼 추가로 메인 스피커 부하 해소',
-          '공간별 스피커 설계: 대형 강당은 격자 배치로 균일한 음압 분포, 소규모 강당은 공간 종심에 따라 포인트 수 차등 설계',
-          'AutoCAD 배치도 작성: 각 층별 스피커 위치·지향각·간격 도면화',
-          '제안서 작성: 공간별 문제 진단, 스피커 선정 근거, 제품 스펙 포함 클라이언트 제출용 문서 작성',
-        ],
-        troubleshootings: [],
-        lessons: [
-          '인테리어 마감재와 음향 설계는 함께 검토해야 한다. 3층 공간에서 천장 면조명의 높은 반사율과 직사각형 구조가 맞물려 잔향 문제가 발생했다. 사전에 인테리어팀과 협의가 이루어졌다면 설계 단계에서 대응할 수 있었다.',
-          '소방 설비 규정은 설계 전에 파악해야 한다. 스프링클러 이격 거리 규정을 현장 설치 중에 처음 알게 되어 배치를 수정했다. 타 공종과의 사전 협의가 설계 완성도를 결정한다.',
-          '설계 전 현장 답사가 설계 품질을 결정한다. 도면으로만 보던 공간을 직접 확인하니 천장 구조와 스피커 지향 포인트에 대한 판단이 가능해졌다.',
-        ],
-      },
-      {
-        id: 'other-installation',
-        category: 'installation',
-        categoryLabel: '설치',
-        title: '기타 설치·튜닝 경험',
-        subtitle: '다수 현장',
-        tags: ['교회 설치', '공연장 점검', '호텔 설치'],
-        isOther: true,
-        otherItems: [
-          { name: '피네이션 연습실', detail: 'LR 포인트소스 세팅·EQ 튜닝' },
-          { name: '양천문화회관', detail: '클리닝·리깅·튜닝' },
-          { name: '안성맞춤아트홀', detail: '시스템 점검·튜닝' },
-          { name: '부평아트센터', detail: '점검·튜닝' },
-          { name: '반석아트홀', detail: '리깅 포인트 보강·재설치·튜닝' },
-          { name: '솔가람아트홀', detail: '스피커 재배치·튜닝' },
-          { name: '조선호텔 그랜드볼룸', detail: '딜레이 스피커 설치·튜닝' },
-          { name: '조선호텔 연회장', detail: '튜닝' },
-          { name: '순천교회', detail: '메인 앰프·프론트필 스피커·콘솔 교체·콘솔 교육·튜닝' },
-          { name: '대구교회', detail: '앰프·콘솔 교체·튜닝' },
-          { name: '세광교회', detail: '메인 스피커·콘솔 교체·튜닝' },
-          { name: '구파발교회', detail: '메인 스피커 체인블록 교체·튜닝' },
-          { name: '풍동성당', detail: '메인 및 딜레이 스피커 설치·튜닝' },
-          { name: '일산신광교회', detail: '콘솔·딜레이 스피커 설치·튜닝' },
-          { name: '승동교회', detail: '콘솔 이전 설치·튜닝' },
-          { name: '임마누엘서울교회', detail: '튜닝 정기검진' },
-          { name: '김포교회', detail: '튜닝' },
-          { name: '광주시온교회', detail: '콘솔 교체·튜닝' },
-        ],
-      },
-      {
-        id: 'graduation',
-        category: 'immersive',
-        categoryLabel: '이머시브',
-        title: '졸업작품 — 이머시브 라이브 뮤지컬',
-        subtitle: '대학교 대극장 · 2024',
-        role: '메인 믹스 엔지니어 + 시스템 엔지니어',
-        tags: ['SPAT Revolution', 'YAMAHA PM10', 'Dante', '28 포인트'],
-        system: [
-          ['스피커', 'Front 6pt + Side 14pt + Rear 8pt (총 28포인트)'],
-          ['기종', 'JBL VRX 라인어레이, EON 515'],
-          ['이머시브 엔진', 'SPAT Revolution'],
-          ['FOH 콘솔', 'YAMAHA PM10'],
-          ['송출 콘솔', 'YAMAHA PM3'],
-          ['네트워크', 'Dante'],
-        ],
-        tasks: [
-          '이머시브 시스템 구성: SPAT Revolution을 Dante로 콘솔 채널 다이렉트 아웃풋과 연결, 28포인트 스피커가 객석 전체를 음장으로 둘러싸는 환경 구축',
-          '스피커 튜닝: Smaart v8으로 28포인트 측정·튜닝. 객석 정가운데에 측정용 마이크를 배치하고 각 포인트의 Time Alignment를 맞춘 후 레벨 및 주파수 특성이 동일하도록 튜닝',
-          '메인 믹스: YAMAHA PM10 운용. FOH 포지션이 스윗스팟이 아니어서 리허설 이후 멀티트랙 재생 + Stage Mix 앱으로 객석 센터에서 믹스를 진행하고 본공연에 사용',
-          '트러블 대응: 공연 중 DANTE 네트워크 에러로 전체 스피커 음소거 상황 발생, 관객에게 상황 설명 후 시스템 재점검, 공연 재개',
-        ],
-        troubleshootings: [
-          {
-            title: '후방 객석 사운드 균일성 문제',
-            body: '튜닝 완료 후 300Hz 이상 대역에서는 균일한 특성을 확보했으나 300Hz 이하 저음 대역이 구역별로 고르지 않았고, 특히 Rear 포인트 스피커에서 두드러졌다. 소리가 한 포인트에서 다른 포인트로 이동할 때 구역 간 음색이 다르면 이동이 그대로 들통난다.<br><br>해결책: 후방 포인트에 사용하던 기종을 사이드와 동일한 기종으로 교체해 음색 편차를 줄였다.',
-          },
-          {
-            title: 'DANTE 네트워크 에러',
-            body: '2회차 공연 중 전체 스피커에서 소리가 끊기는 상황이 발생했다. 콘솔 인풋(100ch+) → SPAT Revolution → 콘솔 재수신 → EQ 처리 → DSP → 스피커로 이어지는 구조로 Dante 네트워크를 hop이 여러 번 타게 되어 있었고, 스위칭허브를 제조사와 사양이 다른 것들로 혼용하여 클락 마스터 선출이 불안정한 상태였다.<br><br>대응: SPAT → 콘솔 복귀 루트를 전부 해제하고 SPAT 아웃풋을 DSP로 다이렉트 패치하여 신호 경로를 단축, 네트워크 부하와 latency를 줄여 공연을 재개했다.',
-          },
-        ],
-        lessons: [
-          '이머시브 환경에서는 스피커 모델 통일성과 가청 대역 전체의 주파수 균일성이 공간감을 결정한다.',
-          '시스템 구성 전에 사용하는 네트워크와 프로토콜을 충분히 이해해야 한다. PTP 클락 동기화, QoS 처리 방식, latency budget 등 핵심 동작 원리를 파악하지 못하면 현장에서 대응이 불가능해진다.',
-          'Dante 네트워크 구성은 스위치 성능을 기준으로 검증한다. DSCP 마킹 처리, QoS 큐 수, 버퍼 크기, 포트 처리 속도가 트래픽 규모를 감당할 수 있는지 확인이 필요하다.',
-          '신호 체인 길이와 채널 수는 네트워크 설계 단계에서 함께 고려한다. 본공연 전 풀 채널 스트레스 테스트가 필수다.',
-        ],
-      },
-      {
-        id: 'atmos',
-        category: 'immersive',
-        categoryLabel: '이머시브',
-        title: '3D 애니메이션 이머시브 믹싱',
-        subtitle: 'Dolby Atmos · 2023.12',
-        role: '믹싱 · 공간 설계',
-        tags: ['Dolby Atmos 7.1.4', 'Pro Tools', '바이노럴 렌더링'],
-        system: [
-          ['포맷', 'Dolby Atmos 7.1.4'],
-          ['작업 환경', 'Pro Tools + Dolby Atmos 7.1.4 이머시브 스튜디오'],
-          ['세션 구성', '전 소스 베드 기반'],
-          ['최종 렌더링', '2트랙 바이노럴 다운믹스'],
-          ['모니터링', 'Dolby Atmos 스튜디오 + 이어폰·헤드폰 교차 청취'],
-        ],
-        tasks: [
-          '전 소스 베드 기반 믹싱: 모든 음원을 채널 레이아웃에 직접 배분',
-          '음원 위치 설정: 자동화 도구 없이 음원의 공간 위치를 수동 조정',
-          '음상 설계: 장면 의도에 맞춰 다이얼로그·효과음 정위 결정',
-          '바이노럴 렌더링: 7.1.4 믹스를 2트랙으로 다운믹스, 기기별 교차 청취',
-        ],
-        troubleshootings: [
-          {
-            title: '스윗스팟 의존 믹싱',
-            body: '한 캐릭터의 독백 장면에서 음상을 정중앙에 고정했다. 이머시브 스튜디오 정중앙에서 모니터링할 때는 의도한 대로 들렸다. 그러나 발표날 청중이 흩어져 앉자, 중앙 앞쪽에 앉은 사람에게는 그 목소리가 뒤에서 들렸다. 한 지점이 아니라 듣는 영역 전체를 기준으로 믹싱해야 했고, 중요한 대사는 정위를 너무 좁게 잡지 말았어야 했다.',
-          },
-          {
-            title: '정위와 화면의 합의점',
-            body: '정위 변화를 분명히 들려주려고 패닝을 과하게 줬더니 화면과 어긋나 이질감이 생겼다. 두 가지가 부딪히는 구간에서는 화면과 맞는 것을 우선으로 두고 정위 폭을 조정했다. 소리 자체의 공간감보다 화면과 맞아떨어지는 것이 몰입을 좌우한다.',
-          },
-        ],
-        lessons: [
-          '정위는 듣는 자리에 따라 달라진다. 스윗스팟에서 완성한 음상은 그 밖에서 무너진다. 한 자리가 아니라 듣는 영역 전체를 기준으로 믹싱해야 한다.',
-          '바이노럴은 앞뒤·위아래 정위가 살아나야 한다. 2트랙 바이노럴로 렌더링하니 천장과 뒤로 보낸 정위가 거의 느껴지지 않았다.',
-          '기기에 따라 정위가 다르게 들린다. 이어폰이 헤드폰보다 정위가 조금 더 잘 느껴졌다. 바이노럴은 어떤 기기로 듣는지를 전제로 점검해야 한다.',
-          '음상 위치가 바뀌면 음색도 바뀐다. 정위를 설계할 때는 위치뿐 아니라 음색이 일관되게 유지되는지도 같이 봐야 한다.',
-        ],
-      },
-    ];
-
-    function renderDetailCard(p) {
-      const sysRows = p.system.map(([k, v]) =>
-        `<tr><td>${k}</td><td>${v}</td></tr>`
-      ).join('');
-
-      const tasks = p.tasks.map(t => `<li>${t}</li>`).join('');
-
-      const troubleshootings = p.troubleshootings.map(ts => {
-        const table = ts.delayTable ? `
-          <table class="data-table">
-            <thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead>
-            <tbody>${ts.delayTable.map(([d,d1,d2]) =>
-              `<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`
-            ).join('')}</tbody>
-          </table>` : '';
-        return `
-          <div class="ts-item">
-            <div class="ts-title">${ts.title}</div>
-            <div class="ts-body">${ts.body}${table}</div>
-          </div>`;
-      }).join('');
-
-      const lessons = p.lessons.map(l => `<li>${l}</li>`).join('');
-
-      const roleBlock = p.role ? `
-        <div class="detail-block">
-          <p class="detail-label">담당 역할</p>
-          <p style="font-size:14px;color:var(--text-sec)">${p.role}</p>
-        </div>` : '';
-
-      const tsBlock = troubleshootings ? `
-        <div class="detail-block">
-          <p class="detail-label">트러블슈팅</p>
-          <div class="ts-list">${troubleshootings}</div>
-        </div>` : '';
-
-      return `
-        <div class="project-card" data-id="${p.id}" data-category="${p.category}">
-          <div class="project-card-header">
-            <div class="project-meta">
-              <p class="project-category">${p.categoryLabel}</p>
-              <h3 class="project-title">${p.title}</h3>
-              <p class="project-subtitle">${p.subtitle}</p>
-              <div class="project-tags">${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}</div>
-            </div>
-            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-          </div>
-          <div class="project-detail">
-            <div class="detail-inner">
-              ${roleBlock}
-              <div class="detail-block">
-                <p class="detail-label">시스템 구성</p>
-                <table class="spec-table">${sysRows}</table>
-              </div>
-              <div class="detail-block">
-                <p class="detail-label">주요 작업</p>
-                <ul class="task-list">${tasks}</ul>
-              </div>
-              ${tsBlock}
-              <div class="detail-block">
-                <p class="detail-label">배운 점</p>
-                <ul class="lesson-list">${lessons}</ul>
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    function renderOtherCard(p) {
-      const items = p.otherItems.map(item => `
-        <div class="other-item">
-          <span class="other-item-name">${item.name}</span>
-          <span class="other-item-detail">${item.detail}</span>
-        </div>`).join('');
-
-      return `
-        <div class="project-card" data-id="${p.id}" data-category="${p.category}">
-          <div class="project-card-header">
-            <div class="project-meta">
-              <p class="project-category">${p.categoryLabel}</p>
-              <h3 class="project-title">${p.title}</h3>
-              <p class="project-subtitle">${p.subtitle}</p>
-              <div class="project-tags">${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}</div>
-            </div>
-            <svg class="expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-              <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
-            </svg>
-          </div>
-          <div class="project-detail">
-            <div class="detail-inner">
-              <div class="other-list">${items}</div>
-            </div>
-          </div>
-        </div>`;
-    }
-
-    function renderProjects(filter) {
-      const list = document.getElementById('projectsList');
-      const filtered = filter === 'all' ? projects : projects.filter(p => p.category === filter);
-
-      list.innerHTML = filtered.map(p => p.isOther ? renderOtherCard(p) : renderDetailCard(p)).join('');
-
-      list.querySelectorAll('.project-card').forEach(card => {
-        card.querySelector('.project-card-header').addEventListener('click', () => {
-          const open = card.classList.contains('expanded');
-          list.querySelectorAll('.project-card.expanded').forEach(c => c.classList.remove('expanded'));
-          if (!open) card.classList.add('expanded');
-        });
-      });
-    }
-
-    // Filter buttons
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderProjects(btn.dataset.filter);
-      });
-    });
-
-    renderProjects('all');
-
-    // Nav active state on scroll
-    const navLinks = { about: document.getElementById('nav-about'), projects: document.getElementById('nav-projects') };
-    window.addEventListener('scroll', () => {
-      const y = window.scrollY + 80;
-      const aboutEl = document.getElementById('about');
-      const projectsEl = document.getElementById('projects');
-      if (projectsEl && y >= projectsEl.offsetTop) {
-        navLinks.about.classList.remove('active');
-        navLinks.projects.classList.add('active');
-      } else if (aboutEl && y >= aboutEl.offsetTop) {
-        navLinks.about.classList.add('active');
-        navLinks.projects.classList.remove('active');
-      } else {
-        navLinks.about.classList.remove('active');
-        navLinks.projects.classList.remove('active');
-      }
-    }, { passive: true });
-  </script>
+</div>
+<div class="div"></div>
+<div class="wrap" id="projects">
+  <p class="eye">02 — Projects</p><h2 class="st2">작업 경험</h2>
+  <div class="filters"><button class="fb active" data-filter="all">전체</button><button class="fb" data-filter="tuning">라이브 튜닝</button><button class="fb" data-filter="installation">설치</button><button class="fb" data-filter="immersive">이머시브</button></div>
+  <div class="plist" id="pl"></div>
+</div>
+<footer><span class="fn">장유림</span><span class="fo">음향 시스템 엔지니어 · (주)아트믹스</span></footer>
+<script src="_shared.js"></script><script>initPortfolio('pl')</script>
 </body>
 </html>
