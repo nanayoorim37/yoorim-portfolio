@@ -184,10 +184,25 @@ const PROJECTS = [
     title:'플레이브 단독 콘서트',subtitle:'고척스카이돔 · 2025.11',
     role:'튜닝 보조 + FF 직접 튜닝 + Lake 오퍼레이팅',
     tags:['d&b GSL + JBL','Lake LM48','Smaart v8'],
+    imgs:[
+      {src:'images/고척스카이돔 공연 중 전경 — Main GSL 멀티존 구성.jpg',caption:'고척스카이돔 공연 중 전경 — Main GSL 멀티존 구성'},
+      {src:'images/KakaoTalk_20260603_002825410_05.jpg',caption:'Main L/R — d&b GSL 24ea each, RR — d&b GSL 16ea'}
+    ],
     system:[['Main L/R','d&b GSL 24ea each'],['Out Fill LL/RR','d&b GSL'],['Delay','6 Points, V8 16ea each'],['SUB','8 Points, GSL-SUB 3ea each'],['DSP','Lake LM48, d&b R1'],['Analyzer','Smaart v8 + OCTA CAPTURE']],
     tasks:['멀티존 Time Alignment: Main / Out Fill / Delay / SUB / Front Fill','공간 균일성 확보: 돔 구조 특성상 딜레이 존이 6포인트로 분산. 존별 레벨·EQ 조정으로 전 구역 균일한 사운드 도출','4층 순회 청음: 측정 후 직접 4층 전 구역을 걸어다니며 귀로 최종 확인 및 조정','Front Fill 직접 튜닝: 마이크 측정 + 현장 청음으로 FF 딜레이·EQ 조정 직접 진행'],
-    troubleshootings:[{title:'리허설 중 FF Time Alignment',body:'시간 부족으로 FF 튜닝 전체를 리허설 이후로 넘겨야 했고, 메인이 재생되는 상황에서 작업을 진행했다. 메인 신호가 흐르는 상태에서 FF 스피커를 하나씩 재생하며 Smaart 임펄스 응답으로 딜레이 값을 확인하고 맞췄다.'},{title:'FF 마이크 위치 오류',body:'Front Fill 튜닝 시 마이크를 FF 스피커들 사이에 배치했으나 얼라인먼트가 맞지 않았다. 원인은 FF 스피커들이 일직선상에 있지 않고 한 포인트가 유독 앞으로 나와있어 마이크가 Off-Axis 위치에 놓인 것이었다. <span class="mk">마이크를 뒤로 이동해 On-Axis가 되도록 조정한 후 재측정해 해결했다.</span>'}],
-    lessons:['<span class="mk">마이크 위치는 스피커 커버리지 기준으로 잡아야 한다.</span>','<span class="mk">측정값과 청감을 반복적으로 대조해야 한다.</span>','딜레이 포인트 설계 단계에서 SPL뿐 아니라 객석 각 위치까지의 거리 편차를 함께 고려해야 한다.']
+    troubleshootings:[
+      {
+        title:'Delay 포인트 위치에 따른 타임 얼라인먼트 한계',
+        body:'6포인트 딜레이는 객석 전체에 고르게 분산된 구조가 아니었다. 포인트마다 커버하는 객석과의 거리가 달랐고, 이는 포인트별로 타임 얼라인먼트 값이 달라야 한다는 뜻이었다. 하나의 딜레이 값으로 맞추면 그 값에 맞는 객석이 있는 반면, 필연적으로 맞지 않는 객석도 생긴다. EQ와 딜레이 값 조정을 시도했으나 물리적 배치에서 비롯된 문제였기 때문에 유의미한 개선이 되지 않았다.<br><br><span class="mk">배치 설계 단계에서 SPL뿐 아니라 각 포인트와 객석 간 거리 편차까지 함께 고려해야 했다. 물리적 배치가 확정된 이후에는 조정할 수 있는 범위가 처음부터 제한된다.</span>',
+        img:{src:'images/6포인트 딜레이 배치 — 객석 거리차에 따른 값 편차 발생 구간.jpg',alt:'6포인트 딜레이 배치',caption:'6포인트 딜레이 배치 — 객석 거리차에 따른 값 편차 발생 구간'}
+      },
+      {
+        title:'FF 마이크 위치 오류',
+        body:'Front Fill 튜닝 시 마이크를 FF 스피커들 사이에 배치했으나 얼라인먼트가 맞지 않았다. 원인은 FF 스피커들이 일직선상에 있지 않고 한 포인트가 유독 앞으로 나와 있어 마이크가 Off-Axis 위치에 놓인 것이었다. <span class="mk">마이크를 뒤로 이동해 On-Axis가 되도록 조정한 후 재측정해 해결했다.</span>',
+        img:{src:'images/FF 마이크 위치 조정 — Off-Axis에서 On-Axis로 재배치.jpg',alt:'FF 마이크 위치 조정',caption:'FF 마이크 위치 조정 — Off-Axis에서 On-Axis로 재배치'}
+      }
+    ],
+    lessons:['<span class="mk">마이크 위치를 선정할 때는 스피커 커버리지를 고려해야 한다.</span> 각 스피커 간 기하학적 중심뿐만 아니라 스피커의 지향 특성과 인접 포인트의 Off-Axis 영향까지 고려해야 제대로 된 측정 위치가 나온다. 이번에는 튜닝을 마친 후 청음에서 특정 포인트의 왜곡이 유독 심하다는 걸 발견했고, 역추적해보니 마이크가 Off-Axis에 놓여 있었다. 측정값이 이상하다고 느껴지면 마이크 위치부터 의심해볼 것이다.','<span class="mk">측정값과 청감을 반복적으로 대조해야 한다.</span> 측정은 객석이 빈 상태에서 진행됐고, 실제 청음은 관객이 찬 상태였다. 사람이 들어오면 고음역 흡음이 늘고 저음역이 상대적으로 부각된다. 특히 돔 상부 객석은 저음이 아래에서 위로 타고 올라가는 특성이 있어 그 차이가 더 크게 느껴졌다. 측정값은 빈 공간 기준이고, 실제 공연은 사람이 찬 공간에서 일어난다는 것을 염두에 두고 튜닝 여유를 잡아야 한다.','딜레이 포인트 설계 단계에서 <span class="mk">SPL뿐 아니라 객석 각 위치까지의 거리 편차를 함께 고려해야 한다.</span> 포인트마다 커버하는 객석과의 거리가 다르면 타임 얼라인먼트가 맞는 자리와 맞지 않는 자리가 필연적으로 생긴다. 물리적 배치가 확정된 이후에는 EQ나 딜레이 값으로 해결할 수 있는 범위가 처음부터 제한된다.']
   },
   {
     id:'illit',category:'tuning',categoryLabel:'라이브 튜닝',
