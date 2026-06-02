@@ -163,7 +163,7 @@ const PROJECTS = [
       {src:'images/문학경기장 전경 — Main부터 Delay 타워까지 멀티존 구성.jpg',caption:'문학경기장 전경 — Main부터 Delay 타워까지 멀티존 구성'},
       {src:'images/공연장 도면 기준 9개 존 스피커 배치.jpg',caption:'공연장 도면 기준 9개 존 스피커 배치'}
     ],
-    system:[['Main L/R','GSL8 14ea + GSL12 2ea each'],['Out Fill L/R','GSL8 14ea + GSL12 2ea each'],['270 L/R','GSL8 4ea each'],['Delay 1 L/R','J8 14ea each'],['Delay 2 L/R','J8 7ea + J12 2ea each'],['Delay 2 Stack L/R','J8 6ea each'],['F.SUB L/R','SL-SUB 9ea each'],['G.SUB L/R','J-SUB 10ea each'],['Front Fill','V8 2ea × 5 (10ea) each'],['DSP','Lake LM44, d&b R1'],['Analyzer','Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7']],
+    system:[['Main L/R','GSL8 14ea + GSL12 2ea per side'],['Out Fill L/R','GSL8 14ea + GSL12 2ea per side'],['270 L/R','GSL8 4ea per side'],['Delay 1 L/R','J8 14ea per side'],['Delay 2 L/R','J8 7ea + J12 2ea per side'],['Delay 2 Stack L/R','J8 6ea per side'],['F.SUB L/R','SL-SUB 9ea per side'],['G.SUB L/R','J-SUB 10ea per side'],['Front Fill','V8 2ea × 5 (10ea) per side'],['DSP','Lake LM44, d&b R1'],['Analyzer','Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7']],
     tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차 최소화','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생. 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워까지 일관된 사운드 도출','실시간 피드백 반영: 리허설 및 공연 중 모니터링, 즉각 조정'],
     troubleshootings:[
       {
@@ -186,9 +186,9 @@ const PROJECTS = [
     tags:['d&b GSL + JBL','Lake LM48','Smaart v8'],
     imgs:[
       {src:'images/고척스카이돔 공연 중 전경 — Main GSL 멀티존 구성.jpg',caption:'고척스카이돔 공연 중 전경 — Main GSL 멀티존 구성'},
-      {src:'images/KakaoTalk_20260603_002825410_05.jpg',caption:'Main L/R — d&b GSL 24ea each, RR — d&b GSL 16ea'}
+      {src:'images/Main LR — d&b GSL 24ea each, RR — d&b GSL 16ea.jpg',caption:'Main LR — d&b GSL 24ea each, RR — d&b GSL 16ea'}
     ],
-    system:[['Main L/R','d&b GSL 24ea each'],['Out Fill L/R','d&b GSL 16ea each'],['Delays','6 Points, V8 12ea each'],['SUBs','8 Points, GSL-SUB 3ea each'],['DSP','Lake LM48, d&b R1'],['Analyzer','Smaart v8 + OCTA CAPTURE']],
+    system:[['Main L/R','d&b GSL 24ea per side'],['Out Fill L/R','d&b GSL 16ea per side'],['Delays','6 Points, V8 12ea per side'],['SUBs','8 Points, GSL-SUB 3ea per side'],['DSP','Lake LM48, d&b R1'],['Analyzer','Smaart v8 + OCTA CAPTURE']],
     tasks:['멀티존 Time Alignment: Main / Out Fill / Delay / SUB / Front Fill','공간 균일성 확보: 돔 구조 특성상 딜레이 존이 6포인트로 분산. 존별 레벨·EQ 조정으로 전 구역 균일한 사운드 도출','4층 순회 청음: 측정 후 직접 4층 전 구역을 걸어다니며 귀로 최종 확인 및 조정','Front Fill 직접 튜닝: 마이크 측정 + 현장 청음으로 FF 딜레이·EQ 조정 직접 진행'],
     troubleshootings:[
       {
@@ -210,7 +210,7 @@ const PROJECTS = [
     role:'튜닝 보조',
     tags:['d&b J·V 시스템','d&b R1','Smaart v8','MOTU M4'],
     imgs:[{src:'images/올림픽홀 공연 중 전경 — d&b J·V 멀티존 구성.jpg',caption:'올림픽홀 공연 중 전경 — d&b J·V 멀티존 구성'}],
-    system:[['Main L/R','d&b J8 12ea + J12 2ea each'],['Out Fill L/R','d&b V8 6ea each'],['SUBs','SL-SUB 6ea each'],['Front Fills','d&b V8 4ea'],['DSP','d&b R1'],['Analyzer','Smaart v8 + MOTU M4 + dbx RTA-M']],
+    system:[['Main L/R','d&b J8 12ea + J12 2ea per side'],['Out Fill L/R','d&b V8 6ea per side'],['SUBs','SL-SUB 6ea per side'],['Front Fills','d&b V8 4ea'],['DSP','d&b R1'],['Analyzer','Smaart v8 + MOTU M4 + dbx RTA-M']],
     tasks:['멀티존 Time Alignment: Main / Sub / Front Fill / Out Fill','L·R 센터 정렬: L·R 리깅 위치 차이로 인한 콤필터링 제거, 정위감 센터 기준으로 보정','공간 균일성 확보: Main 커버리지부터 Out Fill·VIP 구역까지 일관된 사운드 도출','실시간 피드백 반영: Pro Tools 사운드 체크 및 테크 리허설 중 위치별 순회 청음, 즉각 조정'],
     troubleshootings:[
       {
