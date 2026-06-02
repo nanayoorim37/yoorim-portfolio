@@ -164,7 +164,7 @@ const PROJECTS = [
       {src:'images/공연장 도면 기준 9개 존 스피커 배치.jpg',caption:'공연장 도면 기준 9개 존 스피커 배치'}
     ],
     system:[['Main L/R','GSL8 14ea + GSL12 2ea each'],['LL/RR','GSL8 14ea + GSL12 2ea each'],['270 L/R','GSL8 4ea each'],['Delay 1 L/R','J8 14ea each'],['Delay 2 L/R','J8 7ea + J12 2ea each'],['Delay 2 Stack L/R','J8 6ea each'],['F.SUB L/R','SL-SUB 9ea each'],['G.SUB L/R','J-SUB 10ea each'],['Front Fill L/R','V8 2ea × 5 (10ea) each'],['DSP','Lake LM44, d&b R1'],['Analyzer','Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7']],
-    tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB 전 존에 걸쳐 진행했다.','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차를 최소화해 균일도를 확보했다.','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생하는 환경에서, 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워 커버리지까지 일관된 사운드를 도출했다.','실시간 피드백 반영: 리허설 및 공연 중 실시간 모니터링으로 즉각 조정했다.'],
+    tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차 최소화','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생. 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워까지 일관된 사운드 도출','실시간 피드백 반영: 리허설 및 공연 중 모니터링, 즉각 조정'],
     troubleshootings:[
       {
         title:'Delay 타워 딜레이 값 절충',
@@ -259,7 +259,7 @@ const PROJECTS = [
 (function() {
   function renderDetail(p) {
     const sys = p.system.map(([k,v])=>`<tr><td class="sk">${k}</td><td>${v}</td></tr>`).join('');
-    const tasks = p.tasks.map(t=>`<li>${t}</li>`).join('');
+    const tasks = p.tasks.map(t=>{const ci=t.indexOf(':');return ci>-1?`<li><strong>${t.slice(0,ci)}</strong>${t.slice(ci)}</li>`:`<li>${t}</li>`;}).join('');
     const ts = p.troubleshootings.map(ts=>{
       const tbl = ts.delayTable?`<table class="dt"><thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead><tbody>${ts.delayTable.map(([d,d1,d2])=>`<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`).join('')}</tbody></table>`:'';
       const tsImg = ts.img?`<div class="ts-img"><img src="${ts.img.src}" alt="${ts.img.alt}" loading="lazy" onclick="lbOpen(this)" data-cap="${ts.img.caption}"><p>${ts.img.caption}</p></div>`:'';
