@@ -259,7 +259,7 @@ const PROJECTS = [
 (function() {
   function renderDetail(p) {
     const sys = p.system.map(([k,v])=>`<tr><td class="sk">${k}</td><td>${v}</td></tr>`).join('');
-    const tasks = p.tasks.map(t=>{const ci=t.indexOf(':');return ci>-1?`<li><strong>${t.slice(0,ci)}</strong>${t.slice(ci)}</li>`:`<li>${t}</li>`;}).join('');
+    const tasks = p.tasks.map(t=>`<li>${t}</li>`).join('');
     const ts = p.troubleshootings.map(ts=>{
       const tbl = ts.delayTable?`<table class="dt"><thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead><tbody>${ts.delayTable.map(([d,d1,d2])=>`<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`).join('')}</tbody></table>`:'';
       const tsImg = ts.img?`<div class="ts-img"><img src="${ts.img.src}" alt="${ts.img.alt}" loading="lazy" onclick="lbOpen(this)" data-cap="${ts.img.caption}"><p>${ts.img.caption}</p></div>`:'';
