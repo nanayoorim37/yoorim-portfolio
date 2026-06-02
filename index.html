@@ -83,11 +83,19 @@ footer{border-top:1px solid #dde2ec;padding:32px 60px;display:flex;justify-conte
 .mk{background:#dbeafe;color:#1d4ed8;padding:1px 5px;border-radius:3px;font-weight:600}
 .img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:4px}
 .img-item img{width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid #dde2ec;border-radius:2px;cursor:zoom-in;transition:opacity .2s}
-.img-item img:hover{opacity:.88}
+.img-item img:hover{opacity:.82}
 .img-cap{font-size:11px;color:#8a96aa;margin-top:5px;line-height:1.4}
 .ts-img{margin-top:14px}
-.ts-img img{width:100%;max-height:300px;object-fit:cover;border:1px solid #dde2ec;border-radius:2px}
+.ts-img img{width:100%;max-height:300px;object-fit:cover;border:1px solid #dde2ec;border-radius:2px;cursor:zoom-in;transition:opacity .2s}
+.ts-img img:hover{opacity:.82}
 .ts-img p{font-size:11px;color:#8a96aa;margin-top:5px}
+/* ── 라이트박스 ── */
+#lb{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:24px;cursor:zoom-out}
+#lb.open{display:flex}
+#lb img{max-width:100%;max-height:90vh;object-fit:contain;border-radius:2px;box-shadow:0 8px 40px rgba(0,0,0,.6)}
+#lb-cap{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);color:rgba(255,255,255,.7);font-size:12px;text-align:center;pointer-events:none;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:80vw}
+#lb-close{position:fixed;top:20px;right:24px;color:#fff;font-size:24px;cursor:pointer;line-height:1;opacity:.7;transition:opacity .2s}
+#lb-close:hover{opacity:1}
 .fold-btn{display:flex;justify-content:flex-end;padding-top:18px;margin-top:4px;border-top:1px solid #eef0f5}
 .fold-btn button{background:none;border:1px solid #dde2ec;color:#8a96aa;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;border-radius:2px}
 .fold-btn button:hover{border-color:#2563eb;color:#2563eb}
@@ -97,6 +105,7 @@ footer{border-top:1px solid #dde2ec;padding:32px 60px;display:flex;justify-conte
 </style>
 </head>
 <body>
+<div id="lb" onclick="this.classList.remove('open')"><span id="lb-close" onclick="document.getElementById('lb').classList.remove('open')">✕</span><img id="lb-img" src="" alt=""><div id="lb-cap"></div></div>
 <nav><a href="#hero" class="nav-logo">장유림</a><ul class="nav-links"><li><a href="#about">About</a></li><li><a href="#projects">Projects</a></li></ul></nav>
 <div id="hero"><div class="hero-wrap">
   <div>
@@ -253,13 +262,15 @@ const PROJECTS = [
     const tasks = p.tasks.map(t=>{const ci=t.indexOf(':');return ci>-1?`<li><strong>${t.slice(0,ci)}</strong>${t.slice(ci)}</li>`:`<li>${t}</li>`;}).join('');
     const ts = p.troubleshootings.map(ts=>{
       const tbl = ts.delayTable?`<table class="dt"><thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead><tbody>${ts.delayTable.map(([d,d1,d2])=>`<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`).join('')}</tbody></table>`:'';
-      const tsImg = ts.img?`<div class="ts-img"><img src="${ts.img.src}" alt="${ts.img.alt}" loading="lazy"><p>${ts.img.caption}</p></div>`:'';
+      const tsImg = ts.img?`<div class="ts-img"><img src="${ts.img.src}" alt="${ts.img.alt}" loading="lazy" onclick="lbOpen(this)" data-cap="${ts.img.caption}"><p>${ts.img.caption}</p></div>`:'';
       return `<div class="tsi"><div class="tst">${ts.title}</div><div class="tsb">${ts.body}${tbl}${tsImg}</div></div>`;
     }).join('');
     const ls = p.lessons.map(l=>`<li>${l}</li>`).join('');
     const roleBlock = p.role?`<div class="db"><p class="dl">담당 역할</p><p class="role-text">${p.role}</p></div>`:'';
     const tsBlock = ts?`<div class="db"><p class="dl">트러블슈팅</p><div class="tsl">${ts}</div></div>`:'';
-    const imgsBlock = p.imgs?`<div class="db"><div class="img-grid">${p.imgs.map(i=>`<div class="img-item"><img src="${i.src}" alt="${i.caption}" loading="lazy"><p class="img-cap">${i.caption}</p></div>`).join('')}</div></div>`:'';
+    function imgEl(i){return `<div class="img-item"><img src="${i.src}" alt="${i.caption}" loading="lazy" onclick="lbOpen(this)" data-cap="${i.caption}"><p class="img-cap">${i.caption}</p></div>`;}
+    const heroImgBlock = p.imgs&&p.imgs[0]?`<div class="db"><div class="img-grid">${imgEl(p.imgs[0])}</div></div>`:'';
+    const sysImgBlock  = p.imgs&&p.imgs[1]?`<div class="db"><div class="img-grid">${imgEl(p.imgs[1])}</div></div>`:'';
     return `<div class="pc" data-id="${p.id}" data-cat="${p.category}">
       <div class="pch">
         <div class="pm">
@@ -272,8 +283,9 @@ const PROJECTS = [
       </div>
       <div class="pd"><div class="di">
         ${roleBlock}
-        ${imgsBlock}
+        ${heroImgBlock}
         <div class="db"><p class="dl">시스템 구성</p><table class="st">${sys}</table></div>
+        ${sysImgBlock}
         <div class="db"><p class="dl">주요 작업</p><ul class="tl">${tasks}</ul></div>
         ${tsBlock}
         <div class="db"><p class="dl">배운 점</p><ul class="ll">${ls}</ul></div>
@@ -319,6 +331,16 @@ const PROJECTS = [
   });
   render('all');
 })();
+
+// ── 라이트박스 ──
+function lbOpen(img){
+  const lb=document.getElementById('lb');
+  document.getElementById('lb-img').src=img.src;
+  document.getElementById('lb-cap').textContent=img.dataset.cap||img.alt||'';
+  lb.classList.add('open');
+  document.addEventListener('keydown',lbKey);
+}
+function lbKey(e){if(e.key==='Escape'){document.getElementById('lb').classList.remove('open');document.removeEventListener('keydown',lbKey);}}
 </script>
 </body>
 </html>
