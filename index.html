@@ -81,6 +81,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 footer{border-top:1px solid #dde2ec;padding:32px 60px;display:flex;justify-content:space-between;align-items:center;max-width:1140px;margin:0 auto}
 .fn{font-size:13px;font-weight:700;color:#1e2433}.fo{font-size:12px;color:#8a96aa}
 .mk{background:#dbeafe;color:#1d4ed8;padding:1px 5px;border-radius:3px;font-weight:600}
+.img-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:10px;margin-top:4px}
+.img-item img{width:100%;aspect-ratio:16/9;object-fit:cover;border:1px solid #dde2ec;border-radius:2px;cursor:zoom-in;transition:opacity .2s}
+.img-item img:hover{opacity:.88}
+.img-cap{font-size:11px;color:#8a96aa;margin-top:5px;line-height:1.4}
+.ts-img{margin-top:14px}
+.ts-img img{width:100%;max-height:300px;object-fit:cover;border:1px solid #dde2ec;border-radius:2px}
+.ts-img p{font-size:11px;color:#8a96aa;margin-top:5px}
 .fold-btn{display:flex;justify-content:flex-end;padding-top:18px;margin-top:4px;border-top:1px solid #eef0f5}
 .fold-btn button{background:none;border:1px solid #dde2ec;color:#8a96aa;font-family:inherit;font-size:11px;font-weight:600;letter-spacing:.06em;padding:5px 14px;cursor:pointer;display:flex;align-items:center;gap:5px;transition:all .2s;border-radius:2px}
 .fold-btn button:hover{border-color:#2563eb;color:#2563eb}
@@ -143,10 +150,25 @@ const PROJECTS = [
     title:'박효신 단독 콘서트',subtitle:'문학경기장 · 2026.03–04',
     role:'튜닝 보조 + 일부 존 직접 튜닝 + Lake 오퍼레이팅',
     tags:['d&b GSL','Lake Controller LM44','Smaart v9','RME UFX3'],
+    imgs:[
+      {src:'images/문학경기장 전경 — Main부터 Delay 타워까지 멀티존 구성.jpg',caption:'문학경기장 전경 — Main부터 Delay 타워까지 멀티존 구성'},
+      {src:'images/공연장 도면 기준 9개 존 스피커 배치.jpg',caption:'공연장 도면 기준 9개 존 스피커 배치'}
+    ],
     system:[['Main L/R','GSL8 14ea + GSL12 2ea each'],['LL/RR','GSL8 14ea + GSL12 2ea each'],['270 L/R','GSL8 4ea each'],['Delay 1 L/R','J8 14ea each'],['Delay 2 L/R','J8 7ea + J12 2ea each'],['Delay 2 Stack L/R','J8 6ea each'],['F.SUB L/R','SL-SUB 9ea each'],['G.SUB L/R','J-SUB 10ea each'],['Front Fill L/R','V8 2ea × 5 (10ea) each'],['DSP','Lake LM44, d&b R1'],['Analyzer','Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7']],
-    tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차 최소화','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생. 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워까지 일관된 사운드 도출','실시간 피드백 반영: 리허설 및 공연 중 모니터링, 즉각 조정'],
-    troubleshootings:[{title:'Delay 타워 딜레이 값 절충',body:'측정 위치에 따라 Main과 Delay 타워 간 거리비가 달라지는 문제로 절충안을 찾는 데 시간이 오래 소요됐다. 스타디움 특성상 수직 거리 차이가 크기 때문에 단일 측정 포인트로 전 구역을 커버할 수 없는 구조적 문제였다.<br><br>대응: 1층과 4층 각각에서 측정 후 절충점을 찾아 설정. 수치 결정 후 직접 걸어다니며 청음으로 최종 확인.',delayTable:[['3/30','183.45ms','326.00ms'],['3/31','173.20ms','281.02ms'],['4/2','197.57ms','318.25ms'],['4/3','156.00ms','259.20ms']]}],
-    lessons:['<span class="mk">EQ 조정 시 목적을 명확히 하고 건드려야 한다.</span> 피드백 대응 시 전체 그룹에서 조절했다가 딜레이 존 하이가 과도하게 깎이는 상황이 발생했다.','<span class="mk">물리적 한계는 EQ로 해결되지 않는다.</span> 결국 스피커 높이와 각도를 물리적으로 조정해 해결했다.','<span class="mk">멈출 때를 알아야 한다.</span> 공연 중 과도한 조작은 오히려 독이 된다.']
+    tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB 전 존에 걸쳐 진행했다.','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차를 최소화해 균일도를 확보했다.','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생하는 환경에서, 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워 커버리지까지 일관된 사운드를 도출했다.','실시간 피드백 반영: 리허설 및 공연 중 실시간 모니터링으로 즉각 조정했다.'],
+    troubleshootings:[
+      {
+        title:'Delay 타워 딜레이 값 절충',
+        body:'측정 위치에 따라 Main과 Delay 타워 간 거리비가 달라지는 문제로, 절충안을 찾는 데 시간이 오래 소요됐다.<br><br>1층 FOH 기준으로 맞춘 딜레이 값은 4층에서 들었을 때 얼라인먼트가 어긋나고, 반대로 4층 기준으로 맞추면 1층에서 문제가 생긴다. <span class="mk">스타디움 특성상 수직 거리 차이가 크기 때문에 단일 측정 포인트로 전 구역을 커버할 수 없는 구조적 문제였다.</span><br><br>1층과 4층 각각에서 측정 후 절충점을 찾아 설정했고, 수치 결정 후 직접 걸어다니며 청음으로 최종 확인했다. 다만 최종 절충안에서도 1층에서는 딜레이 차이가 귀로 느껴지는 수준으로 남았다. 전 구역을 동시에 만족시키는 단일 값이 존재하지 않는 상황에서의 한계였다.',
+        delayTable:[['3/30','183.45ms','326.00ms'],['3/31','173.20ms','281.02ms'],['4/2','197.57ms','318.25ms'],['4/3','156.00ms','259.20ms']],
+        img:{src:'images/1층 측정 포인트 — Main과 Delay 타워 도착 시간차 확인.jpg',alt:'1층 측정 포인트',caption:'1층 측정 포인트 — Main과 Delay 타워 도착 시간차 확인'}
+      },
+      {
+        title:'Delay 2 후방 객석 하이 커버리지 부족',
+        body:'Delay 2 맨 뒤 객석까지 하이가 충분히 닿지 않는 문제가 발생했다. 레벨을 올리고 EQ로 하이를 보강해봤으나 유의미한 개선이 없었다. 스피커가 해당 구역을 물리적으로 커버하지 못하는 위치에 있는 것이 원인이었다.<br><br><span class="mk">결국 스피커 높이와 각도를 직접 조정해 해결했다. 물리적 한계는 EQ로 해결되지 않는다.</span> 사전 시뮬레이션을 정확하게 돌렸다면 현장에서 이 판단을 더 빨리 내릴 수 있었을 것이다. 시뮬레이션의 정확도가 현장 대응 속도를 결정한다.'
+      }
+    ],
+    lessons:['저음역 컨트롤은 SUB와 Main을 함께 봐야 한다. 대형 풀레인지 라인어레이는 50Hz 근방까지 재생하고, 어레이 커플링으로 저음역 음압이 추가로 올라간다. 킥·베이스의 배음도 라인어레이에서 충분히 재생되고 있다는 뜻이다. <span class="mk">SUB만 조정해서는 만족스러운 결과가 나오지 않는 이유가 여기 있다. Main과 SUB를 함께 그룹으로 잡고 저음역 전체를 보는 시각이 필요하다.</span>','<span class="mk">EQ 조정 시 목적을 명확히 하고 건드려야 한다.</span> 피드백 대응 시 전체 그룹에서 조절했다가 딜레이 존 하이가 과도하게 깎이는 상황이 발생했다. 시끄러운 소리는 전체에서 자르는 게 맞았지만, 그 과정에서 타고 들어오는 소리까지 함께 컷되면서 딜레이 존 하이가 사라졌다. 다음에는 침착하게 어디서 조절할지 목적을 먼저 정하고 건드릴 것이다.','과감하게 처음부터 다시 잡을 수도 있다. <span class="mk">고쳐서 될 문제인지, 플랫으로 초기화하고 처음부터 다시 시작해야 하는 문제인지 판단하는 것 자체가 실력이다.</span> 이번에는 FOH 위치가 변경되면서 기존 튜닝값으로 모니터링이 어려운 상태였고, 수정이 아니라 전체를 다시 잡아야 한다고 판단해 바뀐 위치에서 처음부터 다시 튜닝했다.']
   },
   {
     id:'plave',category:'tuning',categoryLabel:'라이브 튜닝',
@@ -231,11 +253,13 @@ const PROJECTS = [
     const tasks = p.tasks.map(t=>{const ci=t.indexOf(':');return ci>-1?`<li><strong>${t.slice(0,ci)}</strong>${t.slice(ci)}</li>`:`<li>${t}</li>`;}).join('');
     const ts = p.troubleshootings.map(ts=>{
       const tbl = ts.delayTable?`<table class="dt"><thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead><tbody>${ts.delayTable.map(([d,d1,d2])=>`<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`).join('')}</tbody></table>`:'';
-      return `<div class="tsi"><div class="tst">${ts.title}</div><div class="tsb">${ts.body}${tbl}</div></div>`;
+      const tsImg = ts.img?`<div class="ts-img"><img src="${ts.img.src}" alt="${ts.img.alt}" loading="lazy"><p>${ts.img.caption}</p></div>`:'';
+      return `<div class="tsi"><div class="tst">${ts.title}</div><div class="tsb">${ts.body}${tbl}${tsImg}</div></div>`;
     }).join('');
     const ls = p.lessons.map(l=>`<li>${l}</li>`).join('');
     const roleBlock = p.role?`<div class="db"><p class="dl">담당 역할</p><p class="role-text">${p.role}</p></div>`:'';
     const tsBlock = ts?`<div class="db"><p class="dl">트러블슈팅</p><div class="tsl">${ts}</div></div>`:'';
+    const imgsBlock = p.imgs?`<div class="db"><div class="img-grid">${p.imgs.map(i=>`<div class="img-item"><img src="${i.src}" alt="${i.caption}" loading="lazy"><p class="img-cap">${i.caption}</p></div>`).join('')}</div></div>`:'';
     return `<div class="pc" data-id="${p.id}" data-cat="${p.category}">
       <div class="pch">
         <div class="pm">
@@ -248,6 +272,7 @@ const PROJECTS = [
       </div>
       <div class="pd"><div class="di">
         ${roleBlock}
+        ${imgsBlock}
         <div class="db"><p class="dl">시스템 구성</p><table class="st">${sys}</table></div>
         <div class="db"><p class="dl">주요 작업</p><ul class="tl">${tasks}</ul></div>
         ${tsBlock}
