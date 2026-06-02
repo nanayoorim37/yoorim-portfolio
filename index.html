@@ -345,7 +345,7 @@ const PROJECTS = [
         const card = h.closest('.pc');
         const open = card.classList.contains('expanded');
         list.querySelectorAll('.pc.expanded').forEach(c => c.classList.remove('expanded'));
-        if (!open) card.classList.add('expanded');
+        if (!open) { card.classList.add('expanded'); card.scrollIntoView({behavior:'smooth',block:'start'}); }
       });
     });
   }
