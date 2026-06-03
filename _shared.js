@@ -1,0 +1,160 @@
+// ── 공통 프로젝트 데이터 + 렌더러 ──
+window.PROJECTS = [
+  {
+    id:'bhs',category:'tuning',categoryLabel:'라이브 튜닝',
+    title:'박효신 단독 콘서트',subtitle:'문학경기장 · 2026.03–04',
+    role:'튜닝 보조 + J-Stack 직접 튜닝 + Lake 오퍼레이팅',
+    tags:['d&b GSL','Lake Controller LM44','Smaart v9','RME UFX3'],
+    system:[['Main L/R','d&b GSL8 14ea + GSL12 2ea each'],['Sub','F-SUB, G-SUB'],['Fill','LL/RR · Front Fill · 270° · J-Stack'],['Delay','Delay 1 · Delay 2'],['DSP','Lake Controller LM44, d&b R1'],['Analyzer','Smaart v9 + RME Fireface UFX3 + Isemcon mic ×7']],
+    tasks:['멀티존 Time Alignment: Main / LL·RR / Delay 1·2 / 270 / FF / J-Stack / SUB','어레이 균일도 조정: Top·Middle·Bottom 존 간 레벨·주파수 편차 최소화','공간 균일성 확보: 야외 스타디움 특성상 구역별 음압·음색 편차가 크게 발생. 존별 EQ와 레벨 조정으로 최전방 피트부터 Delay 타워까지 일관된 사운드 도출','실시간 피드백 반영: 리허설 및 공연 중 모니터링, 즉각 조정'],
+    troubleshootings:[{title:'Delay 타워 딜레이 값 절충',body:'측정 위치에 따라 Main과 Delay 타워 간 거리비가 달라지는 문제로 절충안을 찾는 데 시간이 오래 소요됐다. 스타디움 특성상 수직 거리 차이가 크기 때문에 단일 측정 포인트로 전 구역을 커버할 수 없는 구조적 문제였다.<br><br>대응: 1층과 4층 각각에서 측정 후 절충점을 찾아 설정. 수치 결정 후 직접 걸어다니며 청음으로 최종 확인.',delayTable:[['3/30','183.45ms','326.00ms'],['3/31','173.20ms','281.02ms'],['4/2','197.57ms','318.25ms'],['4/3','156.00ms','259.20ms']]}],
+    lessons:['EQ 조정 시 목적을 명확히 하고 건드려야 한다. 피드백 대응 시 전체 그룹에서 조절했다가 딜레이 존 하이가 과도하게 깎이는 상황이 발생했다.','물리적 한계는 EQ로 해결되지 않는다. 결국 스피커 높이와 각도를 물리적으로 조정해 해결했다.','멈출 때를 알아야 한다. 공연 중 과도한 조작은 오히려 독이 된다.']
+  },
+  {
+    id:'illit',category:'tuning',categoryLabel:'라이브 튜닝',
+    title:'아일릿 단독 콘서트',subtitle:'올림픽홀 · 2025.11',
+    role:'튜닝 보조',
+    tags:['d&b J·V 시스템','d&b R1','Smaart v8','MOTU M4'],
+    system:[['Main L/R','d&b J8 12ea + J12 2ea each'],['Out Fill','d&b V8 6ea (Stacked)'],['Front Fill','d&b V8 1ea each'],['SUB','3 Points Stacked each'],['Side Fill','Q 2ea'],['DSP','d&b R1'],['Analyzer','Smaart v8 + MOTU M4 + dbx RTA-M']],
+    tasks:['멀티존 Time Alignment: Main / Sub / Front Fill / Out Fill','L·R 센터 정렬: L·R 리깅 위치 차이로 인한 콤필터링 제거, 정위감 센터 기준으로 보정','공간 균일성 확보: Main 커버리지부터 Out Fill·VIP 구역까지 일관된 사운드 도출','실시간 피드백 반영: Pro Tools 사운드 체크 및 테크 리허설 중 위치별 순회 청음, 즉각 조정'],
+    troubleshootings:[{title:'FF Time Alignment 위상 절충',body:'Main(d&b J)과 Front Fill(d&b V) 간 Time Alignment 과정에서 하이와 로우를 동시에 맞출 수 없는 상황이 발생했다. J와 V의 방사 특성 차이에서 기인한 것으로, 단순 딜레이 값 조정만으로는 해결되지 않았다.<br><br>대응: FF에 로우컷을 적용해 위상 충돌 구간을 제거하고, 딜레이 값을 미세 조정해 하이 대역 기울기를 맞추는 방식으로 절충.'},{title:'Out Fill 위상 캔슬',body:'Main과 Out Fill이 겹치는 2층 앞 구역에서 하이가 적게 들리는 문제가 발생했다. J와 V의 방사 특성 차이로 인해 원천적으로 위상 캔슬이 일어나는 구조였다. 측정으로 최대한 맞췄으나 완전한 해결은 불가능했고, 귀로 들었을 때 더 나은 방향으로 최종 조정했다.'}],
+    lessons:['서로 다른 드라이버 구성의 스피커를 인접 존에 혼용할 경우 위상 절충이 불가피하다. 어느 대역을 우선할지 판단 기준을 미리 세우고 접근해야 한다.','측정은 방향을 잡아주지만 최종 판단은 귀로 한다.','같은 베뉴 이전 기록이 있었다면 시간을 크게 단축할 수 있었을 것이다. 현장 기록의 축적이 다음 현장의 자산이 된다.']
+  },
+  {
+    id:'plave',category:'tuning',categoryLabel:'라이브 튜닝',
+    title:'플레이브 단독 콘서트',subtitle:'고척스카이돔 · 2025.11',
+    role:'튜닝 보조 + FF 직접 튜닝 + Lake 오퍼레이팅',
+    tags:['d&b GSL + JBL','Lake LM48','Smaart v8'],
+    system:[['Main L/R','d&b GSL 24ea each'],['Out Fill LL/RR','d&b GSL'],['Delay','6 Points, V8 16ea each'],['SUB','8 Points, GSL-SUB 3ea each'],['DSP','Lake LM48, d&b R1'],['Analyzer','Smaart v8 + OCTA CAPTURE']],
+    tasks:['멀티존 Time Alignment: Main / Out Fill / Delay / SUB / Front Fill','공간 균일성 확보: 돔 구조 특성상 딜레이 존이 6포인트로 분산. 존별 레벨·EQ 조정으로 전 구역 균일한 사운드 도출','4층 순회 청음: 측정 후 직접 4층 전 구역을 걸어다니며 귀로 최종 확인 및 조정','Front Fill 직접 튜닝: 마이크 측정 + 현장 청음으로 FF 딜레이·EQ 조정 직접 진행'],
+    troubleshootings:[{title:'리허설 중 FF Time Alignment',body:'시간 부족으로 FF 튜닝 전체를 리허설 이후로 넘겨야 했고, 메인이 재생되는 상황에서 작업을 진행했다. 메인 신호가 흐르는 상태에서 FF 스피커를 하나씩 재생하며 Smaart 임펄스 응답으로 딜레이 값을 확인하고 맞췄다.'},{title:'FF 마이크 위치 오류',body:'Front Fill 튜닝 시 마이크를 FF 스피커들 사이에 배치했으나 얼라인먼트가 맞지 않았다. 원인은 FF 스피커들이 일직선상에 있지 않고 한 포인트가 유독 앞으로 나와있어 마이크가 Off-Axis 위치에 놓인 것이었다. 마이크를 뒤로 이동해 On-Axis가 되도록 조정한 후 재측정해 해결했다.'}],
+    lessons:['마이크 위치는 스피커 커버리지 기준으로 잡아야 한다.','측정값과 청감을 반복적으로 대조해야 한다.','딜레이 포인트 설계 단계에서 SPL뿐 아니라 객석 각 위치까지의 거리 편차를 함께 고려해야 한다.']
+  },
+  {
+    id:'other-tuning',category:'tuning',categoryLabel:'라이브 튜닝',
+    title:'기타 라이브 튜닝 경험',subtitle:'다수 현장 · 2023–2026',
+    tags:['d&b GSL','JBL A8·A12','야외 스타디움','실내 돔'],
+    isOther:true,
+    otherItems:[{name:'GD',detail:'고양종합운동장 / d&b GSL + JBL A12 / 야외 스타디움'},{name:'GD',detail:'고척스카이돔 / d&b GSL + JBL A12 / 실내 돔'},{name:'태민',detail:'KSPO돔 / d&b A12 + JBL A12 / Flying SUB 카디오이드 패턴'},{name:'스트레이키즈',detail:'KSPO돔 (2025.02)'},{name:'스트레이키즈',detail:'KSPO돔 (2024.03)'},{name:'아이브',detail:'인스파이어 360 / JBL A8 / 원형 베뉴 멀티어레이'},{name:'트와이스',detail:'인스파이어 360 / JBL A8'},{name:'스트레이키즈',detail:'인스파이어'},{name:'태민',detail:'인스파이어'},{name:'박효신',detail:'88잔디마당'},{name:'포레스텔라',detail:'경희대 평화의전당'},{name:'백예린',detail:'에스팩토리 / JBL A8·A12'},{name:'킹누 내한',detail:'올림픽홀'},{name:'헤드윅 뮤지컬',detail:'샤롯데씨어터'},{name:'박서진',detail:'킨텍스 1홀 / d&b J + V'}]
+  },
+  {
+    id:'chuncheon',category:'installation',categoryLabel:'설치',
+    title:'춘천한마음교회 본당 음향 시스템 교체',subtitle:'춘천 · 2024.07',
+    role:'설계 · 블록도 작성 · 설치 · 튜닝',
+    tags:['d&b Vi 시리즈','풀사이클 설치','블록도 작성','제안서'],
+    system:[['Main L/R','d&b Vi8 4ea + Vi12 2ea + Vi-SUB 1ea each'],['Front Fill','d&b Yi7P 2ea + Vi-GSUB 2ea each side'],['Under Balcony','d&b 8S 6ea'],['Stage Monitor','d&b MAX2 4ea + 5S 2ea + 8S 1ea'],['중고등부실','JBL VRX912 2ea + VRX918 2ea each side'],['DSP','d&b 40D × 4, 30D × 2, 10D × 1']],
+    tasks:['기존 시스템 문제 진단: 메인 스피커 안쪽 배치로 인한 마이크-스피커 물리적 간섭 파악, 피드백 원인 규명','스피커 위치 재설계: 외측으로 이동해 마이크-스피커 간섭 물리적 해소','커버리지 보강 설계: 발코니 언더존 스피커 추가로 후방 데드존 해소','블록도 작성: 총 6개 작성 / 제안서 작성: 문제 진단·개선 방향·스피커 선정 근거 포함'],
+    troubleshootings:[{title:'설교 시 구석 커버리지 부족',body:'클라이언트의 요구에 맞춰 고출력 메인 어레이와 넉넉한 서브를 중심으로 설계했고, 딜레이 포인트는 기존 수량을 유지했다. 그러나 실제 예배 중 목사님 말씀 시 구석 좌석까지 소리가 충분히 전달되지 않는다는 피드백이 들어왔다. 스피치는 음압보다 명료도와 커버리지 균일성이 중요한데, 이 부분을 설계 단계에서 충분히 고려하지 못했다.'}],
+    lessons:['클라이언트의 요구 너머를 봐야 한다. "큰 음압"이라는 요구 하나만 반영했다가 실제 사용 상황인 스피치 커버리지를 놓쳤다.','콘솔마다 재생 특성이 다르다.','튜닝 방향성은 기술적 기준을 지키면서도 클라이언트의 청취 성향에 맞춰야 한다.']
+  },
+  {
+    id:'cheongju',category:'installation',categoryLabel:'설치',
+    title:'청주시온교회 교육관 음향 시스템 리모델링',subtitle:'청주 · 2024.11',
+    role:'설계 · 제안 · 설치 · 튜닝 전체',
+    tags:['JAY AUDIO (Artmix)','AutoCAD','격자 배치 설계'],
+    system:[['교육관 3층','JAY AUDIO S8 8ea + S2.5 8ea / 격자 배치'],['교육관 2층','JAY AUDIO S2.5 16ea / 격자 배치'],['1층 1-1','JAY AUDIO S2.5 6ea'],['1층 1-2','JAY AUDIO S2.5 4ea'],['1층 1-3','JAY AUDIO S2.5 2ea']],
+    tasks:['기존 시스템 진단: 저음 대역 과부하로 인한 유닛 고장 원인 파악','공간별 스피커 설계: 대형 강당은 격자 배치, 소규모 강당은 공간 종심에 따라 포인트 수 차등 설계','AutoCAD 배치도 작성: 각 층별 스피커 위치·지향각·간격 도면화','제안서 작성: 공간별 문제 진단, 스피커 선정 근거, 제품 스펙 포함'],
+    troubleshootings:[],
+    lessons:['인테리어 마감재와 음향 설계는 함께 검토해야 한다.','소방 설비 규정은 설계 전에 파악해야 한다.','설계 전 현장 답사가 설계 품질을 결정한다.']
+  },
+  {
+    id:'other-install',category:'installation',categoryLabel:'설치',
+    title:'기타 설치·튜닝 경험',subtitle:'다수 현장',
+    tags:['교회 설치','공연장 점검','호텔 설치'],
+    isOther:true,
+    otherItems:[{name:'피네이션 연습실',detail:'LR 포인트소스 세팅·EQ 튜닝'},{name:'양천문화회관',detail:'클리닝·리깅·튜닝'},{name:'안성맞춤아트홀',detail:'시스템 점검·튜닝'},{name:'부평아트센터',detail:'점검·튜닝'},{name:'반석아트홀',detail:'리깅 포인트 보강·재설치·튜닝'},{name:'솔가람아트홀',detail:'스피커 재배치·튜닝'},{name:'조선호텔 그랜드볼룸',detail:'딜레이 스피커 설치·튜닝'},{name:'조선호텔 연회장',detail:'튜닝'},{name:'순천교회',detail:'메인 앰프·콘솔 교체·교육·튜닝'},{name:'대구교회',detail:'앰프·콘솔 교체·튜닝'},{name:'세광교회',detail:'메인 스피커·콘솔 교체·튜닝'},{name:'구파발교회',detail:'메인 스피커 체인블록 교체·튜닝'},{name:'풍동성당',detail:'메인 및 딜레이 스피커 설치·튜닝'},{name:'일산신광교회',detail:'콘솔·딜레이 스피커 설치·튜닝'},{name:'승동교회',detail:'콘솔 이전 설치·튜닝'},{name:'임마누엘서울교회',detail:'튜닝 정기검진'},{name:'김포교회',detail:'튜닝'},{name:'광주시온교회',detail:'콘솔 교체·튜닝'}]
+  },
+  {
+    id:'graduation',category:'immersive',categoryLabel:'이머시브',
+    title:'졸업작품 — 이머시브 라이브 뮤지컬',subtitle:'대학교 대극장 · 2024',
+    role:'메인 믹스 엔지니어 + 시스템 엔지니어',
+    tags:['SPAT Revolution','YAMAHA PM10','Dante','28 포인트'],
+    system:[['스피커','Front 6pt + Side 14pt + Rear 8pt (총 28포인트)'],['기종','JBL VRX 라인어레이, EON 515'],['이머시브 엔진','SPAT Revolution'],['FOH 콘솔','YAMAHA PM10'],['송출 콘솔','YAMAHA PM3'],['네트워크','Dante']],
+    tasks:['이머시브 시스템 구성: SPAT Revolution — Dante — 콘솔 다이렉트 아웃풋 연결, 28포인트 이머시브 환경 구축','스피커 튜닝: Smaart v8으로 28포인트 측정·튜닝, Time Alignment 및 레벨·주파수 특성 균일화','메인 믹스: YAMAHA PM10 운용. 객석 센터 멀티트랙 믹스 후 본공연 적용','트러블 대응: 공연 중 Dante 에러로 전체 음소거 발생, 재점검 후 재개'],
+    troubleshootings:[{title:'후방 객석 사운드 균일성 문제',body:'300Hz 이하 저음 대역이 구역별로 고르지 않았고, 특히 Rear 포인트 스피커에서 두드러졌다. 소리가 한 포인트에서 다른 포인트로 이동할 때 구역 간 음색이 다르면 이동이 그대로 들통난다.<br><br>해결책: 후방 포인트에 사용하던 기종을 사이드와 동일한 기종으로 교체해 음색 편차를 줄였다.'},{title:'DANTE 네트워크 에러',body:'콘솔 인풋(100ch+) → SPAT Revolution → 콘솔 재수신 → EQ 처리 → DSP → 스피커로 이어지는 구조로 Dante 네트워크를 hop이 여러 번 타게 되어 있었고, 스위칭허브를 제조사와 사양이 다른 것들로 혼용하여 클락 마스터 선출이 불안정한 상태였다.<br><br>대응: SPAT 아웃풋을 DSP로 다이렉트 패치하여 신호 경로를 단축, 공연을 재개했다.'}],
+    lessons:['이머시브 환경에서는 스피커 모델 통일성과 가청 대역 전체의 주파수 균일성이 공간감을 결정한다.','시스템 구성 전에 사용하는 네트워크와 프로토콜을 충분히 이해해야 한다.','Dante 네트워크 구성은 스위치 성능을 기준으로 검증한다.','본공연 전 풀 채널 스트레스 테스트가 필수다.']
+  },
+  {
+    id:'atmos',category:'immersive',categoryLabel:'이머시브',
+    title:'3D 애니메이션 이머시브 믹싱',subtitle:'Dolby Atmos · 2023.12',
+    role:'믹싱 · 공간 설계',
+    tags:['Dolby Atmos 7.1.4','Pro Tools','바이노럴 렌더링'],
+    system:[['포맷','Dolby Atmos 7.1.4'],['작업 환경','Pro Tools + Dolby Atmos 7.1.4 이머시브 스튜디오'],['세션 구성','전 소스 베드 기반'],['최종 렌더링','2트랙 바이노럴 다운믹스'],['모니터링','Dolby Atmos 스튜디오 + 이어폰·헤드폰 교차 청취']],
+    tasks:['전 소스 베드 기반 믹싱: 모든 음원을 채널 레이아웃에 직접 배분','음원 위치 설정: 자동화 도구 없이 음원의 공간 위치를 수동 조정','음상 설계: 장면 의도에 맞춰 다이얼로그·효과음 정위 결정','바이노럴 렌더링: 7.1.4 믹스를 2트랙으로 다운믹스, 기기별 교차 청취'],
+    troubleshootings:[{title:'스윗스팟 의존 믹싱',body:'한 캐릭터의 독백 장면에서 음상을 정중앙에 고정했다. 이머시브 스튜디오 정중앙에서 모니터링할 때는 의도한 대로 들렸다. 그러나 발표날 청중이 흩어져 앉자, 중앙 앞쪽에 앉은 사람에게는 그 목소리가 뒤에서 들렸다.'},{title:'정위와 화면의 합의점',body:'정위 변화를 분명히 들려주려고 패닝을 과하게 줬더니 화면과 어긋나 이질감이 생겼다. 두 가지가 부딪히는 구간에서는 화면과 맞는 것을 우선으로 두고 정위 폭을 조정했다.'}],
+    lessons:['정위는 듣는 자리에 따라 달라진다. 스윗스팟에서 완성한 음상은 그 밖에서 무너진다.','바이노럴은 앞뒤·위아래 정위가 살아나야 한다.','기기에 따라 정위가 다르게 들린다.','음상 위치가 바뀌면 음색도 바뀐다.']
+  }
+];
+
+window.initPortfolio = function(listId) {
+  function renderCard(p) {
+    if (p.isOther) return renderOther(p);
+    return renderDetail(p);
+  }
+  function renderDetail(p) {
+    const sys = p.system.map(([k,v])=>`<tr><td class="sk">${k}</td><td>${v}</td></tr>`).join('');
+    const tasks = p.tasks.map(t=>`<li>${t}</li>`).join('');
+    const ts = p.troubleshootings.map(ts=>{
+      const tbl = ts.delayTable?`<table class="dt"><thead><tr><th>날짜</th><th>Delay 1</th><th>Delay 2</th></tr></thead><tbody>${ts.delayTable.map(([d,d1,d2])=>`<tr><td>${d}</td><td>${d1}</td><td>${d2}</td></tr>`).join('')}</tbody></table>`:'';
+      return `<div class="tsi"><div class="tst">${ts.title}</div><div class="tsb">${ts.body}${tbl}</div></div>`;
+    }).join('');
+    const ls = p.lessons.map(l=>`<li>${l}</li>`).join('');
+    const roleBlock = p.role?`<div class="db"><p class="dl">담당 역할</p><p class="role-text">${p.role}</p></div>`:'';
+    const tsBlock = ts?`<div class="db"><p class="dl">트러블슈팅</p><div class="tsl">${ts}</div></div>`:'';
+    return `<div class="pc" data-id="${p.id}" data-cat="${p.category}">
+      <div class="pch">
+        <div class="pm">
+          <p class="pcat">${p.categoryLabel}</p>
+          <h3 class="ptitle">${p.title}</h3>
+          <p class="psub">${p.subtitle}</p>
+          <div class="ptags">${p.tags.map(t=>`<span class="ptag">${t}</span>`).join('')}</div>
+        </div>
+        <svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div class="pd"><div class="di">
+        ${roleBlock}
+        <div class="db"><p class="dl">시스템 구성</p><table class="st">${sys}</table></div>
+        <div class="db"><p class="dl">주요 작업</p><ul class="tl">${tasks}</ul></div>
+        ${tsBlock}
+        <div class="db"><p class="dl">배운 점</p><ul class="ll">${ls}</ul></div>
+      </div></div>
+    </div>`;
+  }
+  function renderOther(p) {
+    const items = p.otherItems.map(i=>`<div class="oi"><span class="on">${i.name}</span><span class="od">${i.detail}</span></div>`).join('');
+    return `<div class="pc" data-id="${p.id}" data-cat="${p.category}">
+      <div class="pch">
+        <div class="pm">
+          <p class="pcat">${p.categoryLabel}</p>
+          <h3 class="ptitle">${p.title}</h3>
+          <p class="psub">${p.subtitle}</p>
+          <div class="ptags">${p.tags.map(t=>`<span class="ptag">${t}</span>`).join('')}</div>
+        </div>
+        <svg class="xi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      </div>
+      <div class="pd"><div class="di"><div class="ol">${items}</div></div></div>
+    </div>`;
+  }
+  function render(filter) {
+    const list = document.getElementById(listId);
+    if (!list) return;
+    const data = filter==='all' ? PROJECTS : PROJECTS.filter(p=>p.category===filter);
+    list.innerHTML = data.map(renderCard).join('');
+    list.querySelectorAll('.pch').forEach(h=>{
+      h.addEventListener('click',()=>{
+        const card = h.closest('.pc');
+        const open = card.classList.contains('expanded');
+        list.querySelectorAll('.pc.expanded').forEach(c=>c.classList.remove('expanded'));
+        if (!open) card.classList.add('expanded');
+      });
+    });
+  }
+  document.querySelectorAll('.fb').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.fb').forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      render(btn.dataset.filter);
+    });
+  });
+  render('all');
+};
