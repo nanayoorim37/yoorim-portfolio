@@ -35,7 +35,7 @@ window.PROJECTS = [
     title:'기타 라이브 튜닝 경험',subtitle:'다수 현장 · 2023–2026',
     tags:['d&b GSL','JBL A8·A12','야외 스타디움','실내 돔'],
     isOther:true,
-    otherItems:[{name:'GD',detail:'고양종합운동장 / d&b GSL + JBL A12 / 야외 스타디움'},{name:'GD',detail:'고척스카이돔 / d&b GSL + JBL A12 / 실내 돔'},{name:'태민',detail:'KSPO돔 / d&b A12 + JBL A12 / Flying SUB 카디오이드 패턴'},{name:'스트레이키즈',detail:'KSPO돔 (2025.02)'},{name:'스트레이키즈',detail:'KSPO돔 (2024.03)'},{name:'아이브',detail:'인스파이어 360 / JBL A8 / 원형 베뉴 멀티어레이'},{name:'트와이스',detail:'인스파이어 360 / JBL A8'},{name:'스트레이키즈',detail:'인스파이어'},{name:'태민',detail:'인스파이어'},{name:'박효신',detail:'88잔디마당'},{name:'포레스텔라',detail:'경희대 평화의전당'},{name:'백예린',detail:'에스팩토리 / JBL A8·A12'},{name:'킹누 내한',detail:'올림픽홀'},{name:'헤드윅 뮤지컬',detail:'샤롯데씨어터'},{name:'박서진',detail:'킨텍스 1홀 / d&b J + V'}]
+    otherItems:[{name:'GD',detail:'고양종합운동장 / d&b GSL + JBL VTX A / 야외 스타디움'},{name:'GD',detail:'고척스카이돔 / d&b GSL + JBL VTX A / 실내 돔'},{name:'태민',detail:'KSPO돔 / d&b A12 + JBL A12 / 실내 돔'},{name:'스트레이키즈',detail:'KSPO돔 (2025.02) / 실내 돔'},{name:'스트레이키즈',detail:'KSPO돔 (2024.03) / 실내 돔'},{name:'아이브',detail:'인스파이어 360 / JBL VTX A / 실내 돔 360'},{name:'트와이스',detail:'인스파이어 360 / JBL VTX A / 실내 돔 360'},{name:'스트레이키즈',detail:'인스파이어 / d&b J / 실내 돔'},{name:'태민',detail:'인스파이어 / d&b J / 실내 돔'},{name:'박효신',detail:'88잔디마당 / d&b GSL / 야외 마당'},{name:'포레스텔라',detail:'경희대 평화의전당 / d&b GSL + V / 실내 콘서트홀'},{name:'백예린',detail:'에스팩토리 / JBL VTX A / 실내 공장'},{name:'킹누 내한',detail:'올림픽홀 / d&b J + V / 실내 콘서트홀'},{name:'헤드윅 뮤지컬',detail:'샤롯데씨어터 / d&b J / 실내 콘서트홀'},{name:'박서진',detail:'킨텍스 1홀 / d&b J + V / 실내 전시관'}]
   },
   {
     id:'chuncheon',category:'installation',categoryLabel:'설치',
