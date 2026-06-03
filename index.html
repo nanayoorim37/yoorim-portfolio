@@ -235,13 +235,28 @@ const PROJECTS = [
   },
   {
     id:'graduation',category:'immersive',categoryLabel:'이머시브',
-    title:'졸업작품 — 이머시브 라이브 뮤지컬',subtitle:'대학교 대극장 · 2022.11',
+    title:'졸업작품 — 이머시브 라이브 뮤지컬',subtitle:'대학교 대극장 · 2024',
     role:'메인 믹스 엔지니어 + 시스템 엔지니어',
     tags:['SPAT Revolution','YAMAHA PM10','Dante','28 포인트'],
-    system:[['스피커','Front 6pt + Side 14pt + Rear 8pt (총 28포인트)'],['기종','JBL VRX 라인어레이, EON 515'],['이머시브 엔진','SPAT Revolution'],['FOH 콘솔','YAMAHA PM10'],['송출 콘솔','YAMAHA PM3'],['네트워크','Dante']],
-    tasks:['이머시브 시스템 구성: SPAT Revolution을 Dante로 콘솔 채널 다이렉트 아웃풋과 연결, 28포인트 스피커가 객석 전체를 음장으로 둘러싸는 환경 구축','스피커 튜닝: Smaart v8으로 28포인트 측정·튜닝. 각 포인트의 Time Alignment를 맞춘 후 레벨 및 주파수 특성이 동일하도록 튜닝','메인 믹스: YAMAHA PM10 운용. 객석 센터에서 멀티트랙 재생 + Stage Mix 앱으로 믹스 진행 후 본공연에 사용','트러블 대응: 공연 중 DANTE 네트워크 에러로 전체 스피커 음소거 상황 발생, 시스템 재점검 후 공연 재개'],
-    troubleshootings:[{title:'후방 객석 사운드 균일성 문제',body:'300Hz 이하 저음 대역이 구역별로 고르지 않았고, 특히 Rear 포인트 스피커에서 두드러졌다. 소리가 한 포인트에서 다른 포인트로 이동할 때 구역 간 음색이 다르면 이동이 그대로 들통난다.<br><br>해결책: 후방 포인트에 사용하던 기종을 사이드와 동일한 기종으로 교체해 음색 편차를 줄였다.'},{title:'DANTE 네트워크 에러',body:'2회차 공연 중 전체 스피커에서 소리가 끊기는 상황이 발생했다. 원인은 단일하지 않고 복합적으로 작용했다.<br><br>시그널 플로우가 콘솔 인풋(100ch+) → SPAT Revolution → 콘솔 재수신 → EQ 처리 → DSP → 스피커로 이어지는 구조였기 때문에 Dante 네트워크를 hop이 여러 번 타게 되어 있었고, latency가 상당히 쌓인 상태로 운영되고 있었다. 스위칭허브를 제조사와 사양 모두 다른 것들로 혼용했고, Dante가 권장하는 DHCP 대신 Static IP를 사용해 클락 마스터 선출이 불안정한 상태였다. 저사양 스위치의 패킷 버퍼가 100채널 이상의 트래픽을 처리하면서 조금씩 오류가 누적됐고, 즉각 다운되지 않고 2회차 공연 중에 임계점을 넘어 전체가 끊긴 것으로 추정된다.<br><br>대응: SPAT → 콘솔 복귀 루트를 전부 해제하고 SPAT 아웃풋을 DSP로 다이렉트 패치하여 신호 경로를 단축했고, 네트워크 부하와 latency를 줄여 공연을 재개했다.'}],
-    lessons:['<span class="mk">이머시브 환경에서는 스피커 모델 통일성과 가청 대역 전체의 주파수 균일성이 공간감을 결정한다.</span>','시스템 구성 전에 사용하는 네트워크와 프로토콜을 충분히 이해해야 한다.','<span class="mk">Dante 네트워크 구성은 스위치 성능을 기준으로 검증한다.</span>','<span class="mk">본공연 전 풀 채널 스트레스 테스트가 필수다.</span>']
+    imgs:[
+      {src:'images/28포인트로 객석 전체를 둘러싼 이머시브 구성.jpg',caption:'28포인트로 객석 전체를 둘러싼 이머시브 구성'},
+      {src:'images/스피커 및 음향 시스템 배치도.jpg',caption:'스피커 및 음향 시스템 배치도'}
+    ],
+    system:[['스피커','Front 6pt + Side 14pt + Rear 8pt (총 28포인트)'],['기종','JBL VRX 932, JBL PRX715, EON 515, PRX One'],['이머시브 엔진','SPAT Revolution'],['FOH 콘솔','YAMAHA PM10'],['송출 콘솔','YAMAHA PM3'],['네트워크 프로토콜','Dante']],
+    tasks:['이머시브 시스템 구성: SPAT Revolution을 Dante로 콘솔 채널 다이렉트 아웃풋과 연결, 28 포인트 스피커가 객석 전체를 음장으로 둘러싸는 환경을 구축했다.','스피커 튜닝: Smaart v8으로 28 포인트를 측정·튜닝했다. 객석 정가운데에 측정용 마이크를 배치하고 각 포인트의 Time Alignment를 맞춘 후 레벨 및 주파수 특성이 동일하도록 튜닝했다.','메인 믹스: YAMAHA PM10을 운용했다. FOH 포지션이 스윗스팟이 아니어서 리허설 이후 남는 시간에 멀티트랙 재생 + Stage Mix 앱으로 객석 센터에서 믹스를 진행했고, 해당 믹스를 저장해 본공연에 사용했다. 본공연은 FOH 포지션에서 진행했다.','트러블 대응: 공연 중 Dante 네트워크 에러로 전체 스피커 음소거 상황이 발생했다. 관객에게 상황을 설명한 후 시스템을 재점검하고 공연을 재개했다.'],
+    taskImg:{src:'images/SPAT Revolution — 28포인트 음장 및 오브젝트 음원 구성.png',alt:'SPAT Revolution 설정',caption:'SPAT Revolution — 28포인트 음장 및 오브젝트 음원 구성'},
+    troubleshootings:[
+      {
+        title:'포인트 간 음색 일관성',
+        body:'튜닝 완료 후 300Hz 이상 대역에서는 균일한 특성을 확보했으나, 문제는 그 아래였다. 300Hz 이하 저음 대역이 구역별로 고르지 않았고, 특히 Rear 포인트 스피커에서 두드러졌다.<br><br>소리가 한 포인트에서 다른 포인트로 이동할 때 구역 간 음색이 다르면 이동이 그대로 들통난다. <span class="mk">정위의 자연스러움은 개별 포인트의 음질이 아니라 포인트 간 음색 일관성에서 나온다.</span><br><br>해결책은 스피커 교체였다. 후방 포인트에 사용하던 기종을 사이드와 동일한 기종으로 바꿔 음색 편차를 줄였다.'
+      },
+      {
+        title:'Dante 네트워크 에러',
+        body:'2회차 공연 중 전체 스피커에서 소리가 끊기는 상황이 발생했다. 원인은 단일하지 않고 복합적으로 작용했다.<br><br>시그널 플로우 자체가 콘솔 인풋(100ch+) → SPAT Revolution → 콘솔 재수신 → EQ 처리 → DSP → 스피커로 이어지는 구조였기 때문에 Dante 네트워크를 hop이 여러 번 타게 되어 있었고, latency가 상당히 쌓인 상태로 운영되고 있었다. 여기에 스위칭허브를 제조사와 사양 모두 다른 것들로 혼용해 구성했고, Dante가 권장하는 DHCP 대신 Static IP를 사용해 클락 마스터 선출이 불안정한 상태였다.<br><br>저사양 스위치의 패킷 버퍼가 100채널 이상의 트래픽을 처리하면서 조금씩 오류가 누적됐다. 즉각 다운되지 않고 2회차 공연 중에 임계점을 넘어 전체가 끊긴 것으로 추정된다.<br><br><span class="mk">에러 발생 후 SPAT → 콘솔 복귀 루트를 전부 해제하고 SPAT 아웃풋을 DSP로 다이렉트 패치해 신호 경로를 단축했고</span>, 이를 통해 네트워크 부하와 latency를 줄여 공연을 재개했다.',
+        img:{src:'images/Dante Controller 작동 중.jpg',alt:'Dante Controller',caption:'Dante Controller 작동 중'}
+      }
+    ],
+    lessons:['<span class="mk">이머시브 환경에서는 스피커 모델 통일성과 가청 대역 전체의 주파수 균일성이 공간감을 결정한다.</span>','이머시브 시스템에서 객석 중앙은 음장이 가장 균형 잡히는 자리다. 측면으로 갈수록 특정 스피커와의 거리가 가까워지면서 음장감이 무너지는 것을 체감했다. <span class="mk">전 객석에 동일한 음장감을 제공하는 것은 이머시브 시스템의 물리적 한계이기도 하다. 그 안에서 최선의 배치와 튜닝을 찾는 것이 이머시브 시스템 설계의 과제다.</span>','FOH 포지션이 객석 밖에 있을 경우 모니터링 기준을 미리 정해야 한다. 이번에는 FOH에서 들리는 소리가 객석과 너무 달라 톤 판단이 어려웠다. 결국 리허설 때 멀티트랙을 재생하며 객석 중앙에서 믹스를 완성하고, 본공연에서는 헤드폰으로 톤을 수정하며 진행했다. <span class="mk">FOH 위치에 모니터 스피커를 두었다면 더 원활한 오퍼레이팅이 가능했을 것이다.</span>','시스템 구성 전에 사용하는 네트워크와 프로토콜을 충분히 이해해야 한다. 신호 체인 길이, 채널 수, latency budget을 설계 단계에서 함께 고려하지 않으면 오류는 즉각 드러나지 않고 임계점에서 한꺼번에 터진다. <span class="mk">본공연 전 풀 채널 스트레스 테스트가 필수다.</span>']
   },
   {
     id:'atmos',category:'immersive',categoryLabel:'이머시브',
@@ -294,6 +309,7 @@ const PROJECTS = [
     }).join('');
     const ls = p.lessons.map(l=>`<li>${l}</li>`).join('');
     const roleBlock = p.role?`<div class="db"><p class="dl">담당 역할</p><p class="role-text">${p.role}</p></div>`:'';
+    const taskImgBlock = p.taskImg?`<div class="db"><div class="img-grid">${imgEl(p.taskImg)}</div></div>`:'';
     const tsBlock = ts?`<div class="db"><p class="dl">트러블슈팅</p><div class="tsl">${ts}</div></div>`:'';
     function imgEl(i){return `<div class="img-item"><img src="${i.src}" alt="${i.caption}" loading="lazy" onclick="lbOpen(this)" data-cap="${i.caption}"><p class="img-cap">${i.caption}</p></div>`;}
     const heroImgBlock = p.imgs&&p.imgs[0]?`<div class="db"><div class="img-grid">${imgEl(p.imgs[0])}</div></div>`:'';
@@ -314,6 +330,7 @@ const PROJECTS = [
         <div class="db"><p class="dl">시스템 구성</p><table class="st">${sys}</table></div>
         ${sysImgBlock}
         <div class="db"><p class="dl">주요 작업</p><ul class="tl">${tasks}</ul></div>
+        ${taskImgBlock}
         ${tsBlock}
         <div class="db"><p class="dl">배운 점</p><ul class="ll">${ls}</ul>${p.lessonImg?`<div class="ts-img"><img src="${p.lessonImg.src}" alt="${p.lessonImg.alt}" loading="lazy" onclick="lbOpen(this)" data-cap="${p.lessonImg.caption}"><p>${p.lessonImg.caption}</p></div>`:''}</div>
         <div class="fold-btn"><button onclick="const c=this.closest('.pc');c.classList.remove('expanded');c.scrollIntoView({behavior:'instant',block:'start'})">접기 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"/></svg></button></div>
